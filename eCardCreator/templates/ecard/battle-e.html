@@ -1,0 +1,1849 @@
+<!---link rel="stylesheet" href="{{ url_for('static', filename='css/crt.css') }}"-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+  <!--<script src="{{ url_for('static', filename='js/script.js') }}" type="module"></script> -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}">
+  </script>
+</head>
+
+
+{% block content %}
+<style>
+  body {
+    background-color: rgb(36, 36, 36);
+  }
+
+  input[type=text] {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+  }
+
+  input[type=number] {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+    -moz-appearance: textfield;
+  }
+
+  select {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+  }
+
+  #myCheck {
+    background-color: rgb(3, 135, 91);
+    color: rgb(255, 255, 255);
+    border-color: rgb(3, 135, 91);
+    padding: 2px;
+    border-radius: 4px;
+  }
+
+  input[type=submit] {
+    background-color: rgb(3, 135, 91);
+    color: rgb(255, 255, 255);
+    border-color: rgb(3, 135, 91);
+    padding: 2px;
+    border-radius: 4px;
+    width: 100px;
+    height: 30px;
+  }
+
+  .submitbuttons {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 120px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 90px;
+    justify-content: flex-end;
+  }
+
+  #myHeader {
+    background-color: rgb(26, 26, 26);
+    color: rgb(255, 255, 255);
+    text-align: left;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+  
+  form {
+    display: flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-direction: row;
+    background-color: rgb(36, 36, 36);
+    color: antiquewhite;
+  }
+
+  .name {
+    flex-grow: 1;
+    flex-basis: 10px;
+  }
+
+  .email {
+    flex-grow: 3;
+    flex-basis: 10px;
+  }
+
+  .trainerdetails1 {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .tilemapdetails{
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 20px 0px;
+    height: 160px;
+  }
+
+  .trainerdetails {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-direction: column;
+    padding-left: 50px;
+  }
+
+  .pokemon {
+    display: flex;
+    flex-grow: 6;
+    flex-basis: 100px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    border-collapse: separate;
+    border-spacing: 15px;
+    padding: 12px;
+    gap: 40px;
+    border-radius: 10px;
+    background-color: rgb(53, 53, 53);
+    margin-right: 90px;
+  }
+
+  .pokemondetails {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-direction: column;
+    min-width: 332px;
+    max-width: 350px;
+    gap: 5px;
+  }
+
+  .pokemondetailsline {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2px;
+  }
+
+  .easychatsection {
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  .easychat {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    max-width: 400px;
+  }
+
+  .inputPair {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tilemap {
+    width: 240px;
+    height: 160px;
+    position: relative;
+    justify-content: center;
+  }
+
+  .tilemapInfo {
+    position: relative;
+    padding: 10px 10px;
+  }
+
+  .dropdown-box {
+    width: 120px;
+    height: 18px;
+    position: relative;
+    justify-content: left;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .dropdown-box input {
+    width: 100%;
+    height: 18px;
+    border: solid rgb(151, 151, 151) rgb(226, 226, 226) rgb(226, 226, 226) rgb(151, 151, 151);
+    outline: none;
+    border-radius: 4px;
+    padding: 3px 5px;
+    color: rgb(255, 255, 255);
+  }
+
+  .dropdown-box .selected-item {
+    position: relative;
+  }
+
+  .dropdown-box .selected-item::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border: 2px solid;
+    border-color: transparent rgb(129, 129, 129) rgb(129, 129, 129) transparent;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-70%) rotate(45deg);
+  }
+
+  .dropdown-box .selected-item,
+  .dropdown-box .selected-item input {
+    cursor: pointer;
+  }
+
+  .dropdown-box .dropdown-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.671);
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
+    display: none;
+    position: absolute;
+    z-index: 99;
+    background-color: rgb(36, 36, 36);
+    width: 100%;
+    justify-content: left;
+  }
+
+  .dropdown-box.active .dropdown-content {
+    display: block;
+    width: 100%;
+    justify-content: left;
+  }
+
+  .dropdown-box .dropdown-content .search-input {
+    justify-content: left;
+    padding: 5px;
+    width: 90%;
+  }
+
+  .dropdown-box .dropdown-content ul {
+    list-style: none;
+  }
+
+  .dropdown-box .dropdown-content ul li {
+    font-size: 0.8rem;
+    padding: 2px 2px;
+    cursor: pointer;
+  }
+
+  .dropdown-box .dropdown-content ul li.hide {
+    display: none;
+  }
+
+  .dropdown-box .dropdown-content ul li:hover {
+    background-color: rgb(224 224 230);
+  }
+
+  .dropdown-box .dropdown-content ul li.active {
+    background-color: rgb(213 245 245);
+    color: rgb(34 34 218);
+  }
+
+  input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 3pt;
+    box-shadow: 0 0 0 1pt rgb(63, 63, 63);
+    outline-color: transparent;
+  }
+  input[type=color]::-webkit-color-swatch {
+    border-radius: 3px;
+    border: none;
+  }
+  input[type=color]::-moz-color-swatch {
+    border-radius: 3px;
+    border: none;
+  }
+
+  #sendText
+  {
+      height:48px;
+      width:240px;
+      font-size: 11px;
+      line-height: 1.0;
+      padding: 0px 8px;
+      letter-spacing: 0px;
+      word-spacing: 1px;
+      background-color:black;
+      color:white;
+      border: none;
+      resize: none;
+      position: relative;
+      top: -224px;
+  }
+
+  #eviv-field
+  {
+    width:45px;
+    height:20px;
+    margin-left: 5px;
+  }
+
+  ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(26, 26, 26);
+    margin-bottom: 10px;
+  }
+
+  ul.navbar li {
+    float: left;
+    height: 45px;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.navbar li a:hover {
+    background-color: #111;
+    height: inherit;
+  }
+
+  ul.navbar li a.active {
+    background-color: rgb(3, 135, 91);
+    height: inherit;
+  }
+
+  input[type=submit] {
+    background-color: rgb(3, 135, 91);
+    color: rgb(255, 255, 255);
+    border-color: rgb(3, 135, 91);
+    padding: 2px;
+    border-radius: 4px;
+    width: 100px;
+    height: 30px;
+  }
+
+  /* Dropdown Button */
+  .btn {
+    background-color: #2196F3;
+    color: white;
+    padding: 2px;
+    border-color: #2196F3;
+    border-radius: 4px 0 0 4px;
+    height: 30px;
+    border-right-style: none;
+  }
+
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown2 {
+    display: inline-block;
+    padding-right: 10px;
+  }
+
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-download {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    z-index: 1;
+  }
+
+  /* Links inside the dropdown */
+  .dropdown-download a {
+    color: black;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Change color of dropdown links on hover */
+  .dropdown-download a:hover {background-color: #ddd}
+
+  /* Show the dropdown menu on hover */
+  .dropdown2:hover .dropdown-download {
+    display: block;
+  }
+
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown2:hover .btn  {
+    background-color: #0b7dda;
+  }
+
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+
+</style>
+
+
+ <ul class="navbar">
+  <li><a href="battle-e"><h1 style="font-size:30;">Battle-e</h1></a></li>
+  <li><a class="active" href="battle_trainer">Battle Trainer</a></li>
+  <li><a href="trainer_tower">Trainer Tower</a></li>
+  <li><a href="trainer_hill">Trainer Hill</a></li>
+</ul> 
+
+
+<form method="post">
+    <div class="trainerdetails">
+      <div class="trainerdetails1">
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Version</label>
+        <select name="VersionSelect" class="VersionSelect" id="email-field">
+          <option value=0>Ruby</option>
+          <option value=1>Sapphire</option>
+          <option value=2>FireRed</option>
+          <option value=3>LeafGreen</option>
+          <option value=4>Emerald</option>
+        </select>
+      </div>
+      <div class="inputPair">
+        <label class="name" for="email-field">
+          Language</label>
+        <select name="LanguageSelect" class="LanguageSelect" id="email-field">
+          <option value=0>Japanese</option>
+          <option value=1>English</option>
+          <option value=2>German</option>
+          <option value=3>French</option>
+          <option value=4>Italian</option>
+          <option value=5>Spanish</option>
+        </select>
+
+      </div>
+    </div>
+    <br>
+    <br>
+    Trainer Details
+
+
+    <div class="trainerdetails1">
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Trainer Name</label>
+        <input type="text" id="name-field" name="TrainerName" maxlength="8" />
+      </div>
+      <div class="inputPair">
+        <label class="name" for="email-field">
+          Trainer Class:</label>
+        <select name="TrainerClass" class="TrainerClass" id="email-field">
+          {% for class in classlist %}
+          <option value={{ loop.index - 1 }}>{{ class }}</option>
+          {% endfor %}
+        </select>
+
+      </div>
+    </div>
+    <div class="trainerdetails1">
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Battle Tower Level</label>
+        <input type="number" id="name-field" name="BTLevel" value="1" min="1" max="100" />
+      </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Battle Tower Floor</label>
+        <input type="number" id="name-field" name="BTFloor" value="1" min="1" max="100" />
+      </div>
+    </div>
+    <div class="easychatsection">
+      Easy Chat
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Introduction Words
+        </label>
+        <div class="easychat">
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro1" value="-----------" readonly id="intro1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro2" value="-----------" readonly id="intro2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro3" value="-----------" readonly id="intro3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro4" value="-----------" readonly id="intro4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro5" value="-----------" readonly id="intro5">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="intro6" value="-----------" readonly id="intro6">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Winning Words
+        </label>
+        <div class="easychat">
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win1" value="-----------" readonly id="win1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win2" value="-----------" readonly id="win2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win3" value="-----------" readonly id="win3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win4" value="-----------" readonly id="win4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win5" value="-----------" readonly id="win5">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="win6" value="-----------" readonly id="win6">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Losing Words
+        </label>
+        <div class="easychat">
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose1" value="-----------" readonly id="lose1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose2" value="-----------" readonly id="lose2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose3" value="-----------" readonly id="lose3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose4" value="-----------" readonly id="lose4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose5" value="-----------" readonly id="lose5">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="lose6" value="-----------" readonly id="lose6">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for easy in easychat %}
+                <li class="dropdown-item">{{ easy }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=tilemapdetails>
+      <div class="tilemap" id="divImage" style="position: relative;">
+        <canvas id="layer1-canvas" width="240" height="112" style="position: relative; left: 0; top: 0; z-index: 0;"></canvas>
+        <canvas id="layer2-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -112; z-index: 1;"></canvas>
+        <canvas id="layer3-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -224; z-index: 2;"></canvas>
+        <textarea name="sendText" id="sendText" rows="4">Link e-Reader to Pokemon Ruby or Sapphire and select MYSTERY EVENTS on the game's main menu.
+Press the B button to cancel.</textarea>
+      </div>
+      <div class="tilemapInfo" id="divImageInfo" style="position: relative;">
+        <input type="color" id="pal-1-1" name="colorChooser" class="colorChooser" value="#00ff00">
+        <input type="color" id="pal-1-2" name="colorChooser" class="colorChooser" value="#00d800">
+        <input type="color" id="pal-1-3" name="colorChooser" class="colorChooser" value="#00b800">
+        <input type="color" id="pal-1-4" name="colorChooser" class="colorChooser" value="#009800">
+        <input type="color" id="pal-1-5" name="colorChooser" class="colorChooser" value="#007800">
+        <input type="color" id="pal-1-6" name="colorChooser" class="colorChooser" value="#000000">
+        <br>
+        <input type="color" id="pal-2-1" name="colorChooser" class="colorChooser" value="#38B8F8">
+        <input type="color" id="pal-2-2" name="colorChooser" class="colorChooser" value="#1898D8">
+        <input type="color" id="pal-2-3" name="colorChooser" class="colorChooser" value="#0078B8">
+        <input type="color" id="pal-2-4" name="colorChooser" class="colorChooser" value="#005898">
+        <input type="color" id="pal-2-5" name="colorChooser" class="colorChooser" value="#004888">
+        <input type="color" id="pal-2-6" name="colorChooser" class="colorChooser" value="#000000">
+        <br>
+        <input type="color" id="pal-3-1" name="colorChooser" class="colorChooser" value="#F82828">
+        <input type="color" id="pal-3-2" name="colorChooser" class="colorChooser" value="#C80000">
+        <input type="color" id="pal-3-3" name="colorChooser" class="colorChooser" value="#000000">
+        <br>
+        <input type="color" id="pal-4-1" name="colorChooser" class="colorChooser" value="#C89800">
+        <input type="color" id="pal-4-2" name="colorChooser" class="colorChooser" value="#000000">
+        <input type="color" id="pal-4-3" name="colorChooser" class="colorChooser" value="#F8F8F8">
+        <br>
+        <input type="color" id="pal-5-1" name="colorChooser" class="colorChooser" value="#00F800">
+        <input type="color" id="pal-5-2" name="colorChooser" class="colorChooser" value="#005898">
+        <input type="color" id="pal-5-3" name="colorChooser" class="colorChooser" value="#000000">
+        <br>
+        <input type="color" id="pal-6-1" name="colorChooser" class="colorChooser" value="#38B8F8">
+        <input type="color" id="pal-6-2" name="colorChooser" class="colorChooser" value="#005898">
+        <br>
+        <button type="button" id="myCheck" onclick="openDoors()">Open Doors</button>
+      </div>
+    </div>
+  </div>
+  <div class=pokemon>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair" style="width:35%">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon1" value="-----------" readonly id="Pokemon1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item" value={{ loop.index }}>{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair" style="width:22%">
+          <label class="name" for="name-field">
+            PID</label>
+          <input type="number" id="name-field" name="Pokemon1PID" value="0" min="0" max="4294967295"/>
+        </div>
+        <div class="inputPair" style="width:12%">
+          <label class="name" for="name-field">
+            TID</label>
+          <input type="number" id="name-field" name="Pokemon1TID" value="0" min="0" max="65535"/>
+        </div>
+        <div class="inputPair" style="width:12%">
+          <label class="name" for="name-field">
+            SID</label>
+          <input type="number" id="name-field" name="Pokemon1SID" value="0" min="0" max="65535"/>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon1Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon1Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="Pokemon1Shiny">
+            Shiny</label>
+          <input type="checkbox" id="Pokemon1Shinyd" name="Pokemon1Shiny" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon1Ability" id="Ability1" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon1Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon1Item" value="-----------" readonly id="item1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for item in itemlist %}
+                <li class="dropdown-item">{{ item }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+        <input type="number" id="eviv-field" name="Pokemon1HPEV" placeholder="HP" min="0" max="255" />
+        <input type="number" id="eviv-field" name="Pokemon1AtkEV" placeholder="Atk" min="0" max="255" />
+        <input type="number" id="eviv-field" name="Pokemon1DefEV" placeholder="Def" min="0" max="255" />
+        <input type="number" id="eviv-field" name="Pokemon1SpAtkEV" placeholder="SAtk" min="0" max="255" />
+        <input type="number" id="eviv-field" name="Pokemon1SpDefEV" placeholder="SDef" min="0" max="255" />
+        <input type="number" id="eviv-field" name="Pokemon1SpdEV" placeholder="Spd" min="0" max="255" />
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field" width="20">
+          IVs</label>
+        <input type="number" id="eviv-field" name="Pokemon1HPIV" placeholder="HP" min="0" max="31" />
+        <input type="number" id="eviv-field" name="Pokemon1AtkIV" placeholder="Atk" min="0" max="31" />
+        <input type="number" id="eviv-field" name="Pokemon1DefIV" placeholder="Def" min="0" max="31" />
+        <input type="number" id="eviv-field" name="Pokemon1SpAtkIV" placeholder="S.At" min="0" max="31" />
+        <input type="number" id="eviv-field" name="Pokemon1SpDefIV" placeholder="S.Df" min="0" max="31" />
+        <input type="number" id="eviv-field" name="Pokemon1SpdIV" placeholder="Spd" min="0" max="31" />
+      </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon1Move1" value="-----------" readonly id="Pokemon1Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon1Move2" value="-----------" readonly id="Pokemon1Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon1Move3" value="-----------" readonly id="Pokemon1Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon1Move4" value="-----------" readonly id="Pokemon1Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon2" value="-----------" readonly id="Pokemon2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item">{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon2Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Shiny</label>
+          <input type="checkbox" id="name-field" name="Pokemon2Shiny" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon2Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+            <div class="dropdown-box">
+              <div class="selected-item">
+                <input type="text" name="Pokemon2Item" value="-----------" readonly id="Pokemon2Item">
+              </div>
+              <div class="dropdown-content">
+                <div class="search-input">
+                  <input type="text" name="" id="">
+                </div>
+                <ul>
+                  {% for item in itemlist %}
+                  <li class="dropdown-item">{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon2Ability" id="Ability2" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon2Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+          <input type="number" id="eviv-field" name="Pokemon2HPEV" placeholder="HP" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon2AtkEV" placeholder="Atk" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon2DefEV" placeholder="Def" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon2SpAtkEV" placeholder="S.At" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon2SpDefEV" placeholder="S.Df" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon2SpdEV" placeholder="Spd" min="0" max="255" />
+        </div>
+        <div class=pokemondetailsline>
+          <label class="name" for="name-field">
+            IVs</label>
+          <input type="number" id="eviv-field" name="Pokemon2HPIV" placeholder="HP" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon2AtkIV" placeholder="Atk" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon2DefIV" placeholder="Def" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon2SpAtkIV" placeholder="S.At" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon2SpDefIV" placeholder="S.Df" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon2SpdIV" placeholder="Spd" min="0" max="31" />
+        </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon2Move1" value="-----------" readonly id="Pokemon2Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon2Move2" value="-----------" readonly id="Pokemon2Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon2Move3" value="-----------" readonly id="Pokemon2Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon2Move4" value="-----------" readonly id="Pokemon2Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon3" value="-----------" readonly id="Pokemon3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item">{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon3Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Shiny</label>
+          <input type="checkbox" id="name-field" name="Pokemon3Shiny" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon3Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+            <div class="dropdown-box">
+              <div class="selected-item">
+                <input type="text" name="Pokemon3Item" value="-----------" readonly id="item3">
+              </div>
+              <div class="dropdown-content">
+                <div class="search-input">
+                  <input type="text" name="" id="">
+                </div>
+                <ul>
+                  {% for item in itemlist %}
+                  <li class="dropdown-item">{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon3Ability" id="Ability3" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon3Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+          <input type="number" id="eviv-field" name="Pokemon3HPEV" placeholder="HP" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon3AtkEV" placeholder="Atk" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon3DefEV" placeholder="Def" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon3SpAtkEV" placeholder="S.At" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon3SpDefEV" placeholder="S.Df" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon3SpdEV" placeholder="Spd" min="0" max="255" />
+        </div>
+        <div class=pokemondetailsline>
+          <label class="name" for="name-field">
+            IVs</label>
+          <input type="number" id="eviv-field" name="Pokemon3HPIV" placeholder="HP" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon3AtkIV" placeholder="Atk" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon3DefIV" placeholder="Def" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon3SpAtkIV" placeholder="S.At" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon3SpDefIV" placeholder="S.Df" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon3SpdIV" placeholder="Spd" min="0" max="31" />
+        </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon3Move1" value="-----------" readonly id="Pokemon3Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon3Move2" value="-----------" readonly id="Pokemon3Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon3Move3" value="-----------" readonly id="Pokemon3Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon3Move4" value="-----------" readonly id="Pokemon3Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon4" value="-----------" readonly id="Pokemon4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item">{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon4Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Shiny</label>
+          <input type="checkbox" id="name-field" name="Pokemon4Shiny" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon4Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+            <div class="dropdown-box">
+              <div class="selected-item">
+                <input type="text" name="Pokemon4Item" value="-----------" readonly id="item4">
+              </div>
+              <div class="dropdown-content">
+                <div class="search-input">
+                  <input type="text" name="" id="">
+                </div>
+                <ul>
+                  {% for item in itemlist %}
+                  <li class="dropdown-item">{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon4Ability" id="Ability4" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon4Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+          <input type="number" id="eviv-field" name="Pokemon4HPEV" placeholder="HP" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon4AtkEV" placeholder="Atk" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon4DefEV" placeholder="Def" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon4SpAtkEV" placeholder="S.At" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon4SpDefEV" placeholder="S.Df" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon4SpdEV" placeholder="Spd" min="0" max="255" />
+        </div>
+        <div class=pokemondetailsline>
+          <label class="name" for="name-field">
+            IVs</label>
+          <input type="number" id="eviv-field" name="Pokemon4HPIV" placeholder="HP" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon4AtkIV" placeholder="Atk" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon4DefIV" placeholder="Def" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon4SpAtkIV" placeholder="S.At" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon4SpDefIV" placeholder="S.Df" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon4SpdIV" placeholder="Spd" min="0" max="31" />
+        </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon4Move1" value="-----------" readonly id="Pokemon4Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon4Move2" value="-----------" readonly id="Pokemon4Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon4Move3" value="-----------" readonly id="Pokemon4Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon4Move4" value="-----------" readonly id="Pokemon4Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon5" value="-----------" readonly id="Pokemon5">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item">{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon5Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Shiny</label>
+          <input type="checkbox" id="name-field" name="Pokemon5Level" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon5Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+            <div class="dropdown-box">
+              <div class="selected-item">
+                <input type="text" name="Pokemon5Item" value="-----------" readonly id="item5">
+              </div>
+              <div class="dropdown-content">
+                <div class="search-input">
+                  <input type="text" name="" id="">
+                </div>
+                <ul>
+                  {% for item in itemlist %}
+                  <li class="dropdown-item">{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon5Ability" id="Ability5" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon5Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+          <input type="number" id="eviv-field" name="Pokemon5HPEV" placeholder="HP" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon5AtkEV" placeholder="Atk" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon5DefEV" placeholder="Def" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon5SpAtkEV" placeholder="S.At" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon5SpDefEV" placeholder="S.Df" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon5SpdEV" placeholder="Spd" min="0" max="255" />
+        </div>
+        <div class=pokemondetailsline>
+          <label class="name" for="name-field">
+            IVs</label>
+          <input type="number" id="eviv-field" name="Pokemon5HPIV" placeholder="HP" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon5AtkIV" placeholder="Atk" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon5DefIV" placeholder="Def" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon5SpAtkIV" placeholder="S.At" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon5SpDefIV" placeholder="S.Df" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon5SpdIV" placeholder="Spd" min="0" max="31" />
+        </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon5Move1" value="-----------" readonly id="Pokemon5Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon5Move2" value="-----------" readonly id="Pokemon5Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon5Move3" value="-----------" readonly id="Pokemon5Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon5Move4" value="-----------" readonly id="Pokemon5Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class=pokemondetails>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Pokemon</label>
+          <div class="dropdown-box">
+            <div class="selected-item" id="Pokemon">
+              <input type="text" name="Pokemon6" value="-----------" readonly id="Pokemon6">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for pokemon in pokelist %}
+                <li class="dropdown-item">{{ pokemon }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Lv.</label>
+          <input type="number" id="name-field" name="Pokemon6Level" value="1" min="1" max="100" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Shiny</label>
+          <input type="checkbox" id="name-field" />
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nickname</label>
+          <input type="text" id="name-field" name="Pokemon6Nickname" maxlength="11" />
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Item</label>
+            <div class="dropdown-box">
+              <div class="selected-item">
+                <input type="text" name="Pokemon6Item" value="-----------" readonly id="item6">
+              </div>
+              <div class="dropdown-content">
+                <div class="search-input">
+                  <input type="text" name="" id="">
+                </div>
+                <ul>
+                  {% for item in itemlist %}
+                  <li class="dropdown-item">{{ item }}</li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Ability</label>
+          <select name="Pokemon6Ability" id="Ability6" disabled=true>
+            <option value="0">------------</option>
+          </select>
+        </div>
+        <div class="inputPair">
+          <label class="name" for="name-field">
+            Nature</label>
+          <select name="Pokemon6Nature" id="nat">
+            {% for nature in naturelist %}
+            <option value={{ loop.index - 1 }}>{{ nature }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class=pokemondetailsline>
+        <label class="name" for="name-field">
+          EVs</label>
+          <input type="number" id="eviv-field" name="Pokemon6HPEV" placeholder="HP" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon6AtkEV" placeholder="Atk" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon6DefEV" placeholder="Def" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon6SpAtkEV" placeholder="S.At" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon6SpDefEV" placeholder="S.Df" min="0" max="255" />
+          <input type="number" id="eviv-field" name="Pokemon6SpdEV" placeholder="Spd" min="0" max="255" />
+        </div>
+        <div class=pokemondetailsline>
+          <label class="name" for="name-field">
+            IVs</label>
+          <input type="number" id="eviv-field" name="Pokemon6HPIV" placeholder="HP" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon6AtkIV" placeholder="Atk" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon6DefIV" placeholder="Def" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon6SpAtkIV" placeholder="S.At" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon6SpDefIV" placeholder="S.Df" min="0" max="31" />
+          <input type="number" id="eviv-field" name="Pokemon6SpdIV" placeholder="Spd" min="0" max="31" />
+        </div>
+      <div class="inputPair">
+        <label class="name" for="name-field">
+          Moves</label>
+        <div class=pokemondetailsline>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon6Move1" value="-----------" readonly id="Pokemon6Move1">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon6Move2" value="-----------" readonly id="Pokemon6Move2">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon6Move3" value="-----------" readonly id="Pokemon6Move3">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+          <div class="dropdown-box">
+            <div class="selected-item">
+              <input type="text" name="Pokemon6Move4" value="-----------" readonly id="Pokemon6Move4">
+            </div>
+            <div class="dropdown-content">
+              <div class="search-input">
+                <input type="text" name="" id="">
+              </div>
+              <ul>
+                {% for move in movelist %}
+                <li class="dropdown-item">{{ move }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="break"></div>
+  <div class="submitbuttons">
+    <button class="btn">Download</button>
+    <div class="dropdown2">
+      <button class="btn" style="border-left:1px solid navy; border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
+        <i class="fa fa-caret-down"></i>
+      </button>
+      <div class="dropdown-download">
+        <a href="#">.raw File</a>
+        <a href="#">.bmp Image</a>
+        <a href="#">Downlad All</a>
+      </div>
+    </div>
+    <input type="submit" value="Generate">
+  </div>
+</form>
+
+{% endblock %}
