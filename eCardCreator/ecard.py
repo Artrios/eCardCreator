@@ -1,4 +1,5 @@
 import functools
+import subprocess
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for
@@ -13,6 +14,24 @@ bp = Blueprint('ecard', __name__, url_prefix='/ecard')
 def cardmaker():
     if request.method == 'POST':
         print_request_form(request.form)
+        subprocess.run(["python3", "build/scripts/regionalize.py", f"build/{request.form['TrainerName']}.asm", f"build/{request.form['TrainerName']}-{request.form['language']}.tx", request.form['language'], request.form['language']])
+        subprocess.run(["bin/rgbds/rgbasm", "-M", f"build/{request.form['TrainerName']}-{request.form['language']}.o.d", "-o", f"build/{request.form['TrainerName']}-{request.form['language']}.o", f"build/{request.form['TrainerName']}-{request.form['language']}.tx"])
+        subprocess.run(["bin/rgbds/rgblink", "-o", f"build/{request.form['TrainerName']}-{request.form['language']}.gbc", f"build/{request.form['TrainerName']}-{request.form['language']}.o"])
+        subprocess.run(["python3", "build/scripts/stripgbc.py", f"build/{request.form['TrainerName']}-{request.form['language']}.gbc", f"build/{request.form['TrainerName']}-{request.form['language']}.bin"])
+        subprocess.run(["python3", "build/scripts/checksum.py", f"build/{request.form['TrainerName']}-{request.form['language']}.bin", f"build/{request.form['TrainerName']}-{request.form['language']}.mev"])
+        subprocess.run(["python3", "build/scripts/ereadertext.py", f"build/{request.form['TrainerName']}-card.asm",f"build/{request.form['TrainerName']}-card-{request.form['language']}.tx", request.form['language']])
+
+        subprocess.run(["python3", "build/scripts/regionalize.py", "build/prologue.asm", "build/prologue-EN.tx", "EN", "EN"])
+        subprocess.run(["bin/rgbds/rgbasm", "-M", "build/prologue-EN.o.d", "-o", "build/prologue-EN.o", "build/prologue-EN.tx"])
+        subprocess.run(["bin/rgbds/rgblink", "-o", "build/prologue-EN.gbc", "build/prologue-EN.o"])
+        subprocess.run(["python3", "build/scripts/stripgbc.py", "build/prologue-EN.gbc", "build/prologue-EN.bin"])
+
+        subprocess.run(["python3", "build/scripts/ereadertext.py", "build/battletrainer.asm", "build/battletrainer-EN.tx", request.form['language']])
+        subprocess.run(["bin/rgbds/rgbasm", "-I", "build", "-M", f"build/{request.form['TrainerName']}-card-{request.form['language']}.o.d", "-o", f"build/{request.form['TrainerName']}-card-{request.form['language']}.o", f"build/{request.form['TrainerName']}-card-{request.form['language']}.tx"])
+        subprocess.run(["bin/rgbds/rgblink", "-o", f"build/{request.form['TrainerName']}-card-{request.form['language']}.gbc", f"build/{request.form['TrainerName']}-card-{request.form['language']}.o"])
+        subprocess.run(["python3", "build/scripts/stripgbc.py", f"build/{request.form['TrainerName']}-card-{request.form['language']}.gbc", f"build/{request.form['TrainerName']}-card-{request.form['language']}.z80"])
+        subprocess.run(["bin/nedc/nevpk", "-c", "-i", f"build/{request.form['TrainerName']}-card-{request.form['language']}.z80", "-o", f"build/{request.form['TrainerName']}-card-{request.form['language']}.vpk"])
+        subprocess.run(["bin/nedc/nedcmake", "-i", f"build/{request.form['TrainerName']}-card-{request.form['language']}.vpk", "-o", f"build/{request.form['TrainerName']}-card-{request.form['language']}", "-type", "1", "-region", "1"])
 
     pokelist=[]
     classlist=[]
