@@ -3,40 +3,40 @@ jp Start
 db $00
 
 BattleTrainerBackdrop: ; 104
-	INCBIN "sprites/battletrainer.4bpp"
+	INCBIN "eCardCreator/build/sprites/battletrainer.4bpp"
 DoorSprite: ; 604
-	INCBIN "sprites/trainerdoor.4bpp"
+	INCBIN "eCardCreator/build/sprites/trainerdoor.4bpp"
 
 BackdropPalettes: ; A04
-	INCLUDE "sprites/battletrainer1.pal"
-	INCLUDE "sprites/battletrainer2.pal"
-	INCLUDE "sprites/battletrainer3.pal"
-	INCLUDE "sprites/battletrainer4.pal"
+	INCLUDE "eCardCreator/build/sprites/battletrainer1.pal"
+	INCLUDE "eCardCreator/build/sprites/battletrainer2.pal"
+	INCLUDE "eCardCreator/build/sprites/battletrainer3.pal"
+	INCLUDE "eCardCreator/build/sprites/battletrainer4.pal"
 TrainerPalette: ; A6C
-	INCLUDE "sprites/battletrainer5.pal"
+	INCLUDE "eCardCreator/build/sprites/battletrainer5.pal"
 DoorPalette: ; A74
-	INCLUDE "sprites/trainerdoor.pal"
+	INCLUDE "eCardCreator/build/sprites/trainerdoor.pal"
 
 BackdropTilemap: ; A7C
-	INCBIN "sprites/battletrainer.tilemap"
+	INCBIN "eCardCreator/build/sprites/battletrainer.tilemap"
 
 Prologue: ; 0DFC
-	INCBIN "prologue-{REGION_NAME}.bin"
+	INCBIN "eCardCreator/build/prologue-{REGION_NAME}.bin"
 
 DataPacket: ; 0E38
-	INCBIN "trainers/{TRAINER}-{REGION_NAME}.mev"
+	INCBIN "eCardCreator/build/{TRAINER}-{REGION_NAME}.mev"
 	REPT 44
 		db 0 ; pads the data to 256 bytes
 	ENDR
 
 TrainerSprite: ; 0F38
-	INCBIN "sprites/trainers/{CLASS}.4bpp"
+	INCBIN "eCardCreator/data/images/trainers/{CLASS}.4bpp"
 TrainerSpriteData: ; 1738
 	dw TrainerSprite
 	dw TrainerPalette
 	db $08,$08,$01,$01,$01,$01,$01
 
-INCLUDE "../common/mem_struct.asm"
+INCLUDE "eCardCreator/build/common/mem_struct.asm"
 
 BackdropSpriteData: ; 1777
 	dw BattleTrainerBackdrop
@@ -68,7 +68,7 @@ BattleEntryFinished: ; 188d
 	db "Press the A Button to resend.\n"
 	db "Press the B Button to cancel.\0"
 
-INCLUDE "../common/battle_e_transfer.asm"
+INCLUDE "eCardCreator/build/common/battle_e_transfer.asm"
 
 Open_Doors: ; 1946
 	ld l, $20
@@ -153,7 +153,7 @@ Start: ; 1984
 	DrawText RegionHandlePtr, Instructions1, 8, 4
 	API $08D
 
-INCLUDE "../common/wait_for_link.asm"
+INCLUDE "eCardCreator/build/common/wait_for_link.asm"
 
 	call Open_Doors
 	DrawText RegionHandlePtr, Instructions2, 8, 4
@@ -162,13 +162,13 @@ INCLUDE "../common/wait_for_link.asm"
 	ld [bc], a
 	
 DEF UNKNOWN_VALUE EQU $02A6
-INCLUDE "../common/wait_for_ready.asm"
+INCLUDE "eCardCreator/build/common/wait_for_ready.asm"
 
 	call Close_Doors
 	DrawText RegionHandlePtr, BattleEntryInProcess, 8, 4
 
 DEF DATA_TRANSFER_LENGTH EQU 6144
-INCLUDE "../common/transfer_data.asm"
+INCLUDE "eCardCreator/build/common/transfer_data.asm"
 
 	ld hl, $5fff
 	LD_IND_HL Space_1
@@ -185,8 +185,8 @@ INCLUDE "../common/transfer_data.asm"
 	ld c, a
 	nop
 
-INCLUDE "../common/wrap_up.asm"
-INCLUDE "../common/word_shift_right.asm"
+INCLUDE "eCardCreator/build/common/wrap_up.asm"
+INCLUDE "eCardCreator/build/common/word_shift_right.asm"
 
 SomeVar1: EOF               ; 1B9F
 SomeVar2: dw 0              ; 1BA0

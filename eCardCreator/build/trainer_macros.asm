@@ -1,11 +1,11 @@
-INCLUDE "card_macros.asm"
-INCLUDE "constants/abilities.asm"
-INCLUDE "constants/easychat.asm"
-INCLUDE "constants/items.asm"
-INCLUDE "constants/moves.asm"
-INCLUDE "constants/natures.asm"
-INCLUDE "constants/pokemon.asm"
-INCLUDE "constants/trainerclasses.asm"
+INCLUDE "eCardCreator/build/card_macros.asm"
+INCLUDE "eCardCreator/build/constants/abilities.asm"
+INCLUDE "eCardCreator/build/constants/easychat.asm"
+INCLUDE "eCardCreator/build/constants/items.asm"
+INCLUDE "eCardCreator/build/constants/moves.asm"
+INCLUDE "eCardCreator/build/constants/natures.asm"
+INCLUDE "eCardCreator/build/constants/pokemon.asm"
+INCLUDE "eCardCreator/build/constants/trainerclasses.asm"
 
 DEF MOSSDEEP EQU 0
 

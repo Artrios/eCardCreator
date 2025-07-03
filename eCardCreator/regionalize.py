@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
 import sys
-from eCardCreator.gen3text import utf8ToRSText
-from eCardCreator.asmquote import asmQuoteBytes
+import eCardCreator.gen3text
+import eCardCreator.asmquote
 
 def regionalize(infile, outfile, region, lang):
 	out = open(outfile, 'w')
-
-	with open(outfile, 'r') as f:
+	
+	with open(infile, 'r') as f:
 		for asm in f:
 			asms = asm.split('"')
 			command = asms[0].strip()
 			if (command == "Text_" + lang) or (command == "Text"):
-				asms[1] = utf8ToRSText(asms[1], lang)
+				asms[1] = eCardCreator.gen3text.utf8ToRSText(asms[1], lang)
 				try:
 					length = asms[2].split(';')[0] # strip trailing comment
 					padding = int(length) - len(asms[1])
@@ -21,7 +21,7 @@ def regionalize(infile, outfile, region, lang):
 						asms[1] += "\x00"
 				except ValueError:
 					pass
-				out.write("\tdb " + asmQuoteBytes(asms[1]) + "\n")
+				out.write("\tdb " + eCardCreator.asmquote.asmQuoteBytes(asms[1]) + "\n")
 			elif len(command) < 5 or command[0:5] != "Text_":
 				out.write(asm)
 				if "macros.asm" in asm:

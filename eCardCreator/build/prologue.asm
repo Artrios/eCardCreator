@@ -1,4 +1,4 @@
-INCLUDE "card_macros.asm"
+INCLUDE "eCardCreator/build/card_macros.asm"
 SECTION "prologue", ROM0[$100]
 
 	db "GameFreak inc."

@@ -1,4 +1,4 @@
-INCLUDE "trainer_macros.asm"
+INCLUDE "eCardCreator/build/trainer_macros.asm"
 
 	Battle_Trainer
 
