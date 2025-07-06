@@ -212,6 +212,7 @@ window.addEventListener("load", () => {
             if (!dropdownContent[i].contains(windowClickEvent.target)) {
               closeDropdown(i);
             }
+
         }
         else if (selectedItem[i].contains(windowClickEvent.target)) {
             searchInput[i].value = "";
@@ -234,11 +235,13 @@ window.addEventListener("load", () => {
                 dropdownContent[i].children[1].children[j].classList.add("active");
 
                 const selectedItemInput = document.querySelectorAll(".selected-item input");
+                const nicknameInput = document.querySelectorAll(".PokemonNickname");
 
                 selectedItemInput[i].value = dropdownContent[i].children[1].children[j].innerHTML;
                 selectedItemInput[i].id = dropdownContent[i].children[1].children[j].value;
                 if(selectedItem[i].id.includes("Pokemon")){
                     pokemonchoicechange(selectedItemInput[i].value,"Ability"+selectedItemInput[i].name.slice(-1));
+                    nicknameInput[selectedItemInput[i].name.slice(-1)-1].value = selectedItemInput[i].value;
                 }
                 closeDropdown(i);
             })
@@ -367,7 +370,7 @@ window.addEventListener("load", () => {
     });
 
     
-    const colorElement = document.querySelectorAll(".colorChooser");
+    const colorElement = document.querySelectorAll('input[type=color]');
     for(let i = 0; i < colorElement.length; i++){
         colorElement[i].addEventListener("input", (event) => {
             var palNum = event.target.id.split("-")[1];
