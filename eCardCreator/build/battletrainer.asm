@@ -21,10 +21,10 @@ BackdropTilemap: ; A7C
 	INCBIN "eCardCreator/build/sprites/battletrainer.tilemap"
 
 Prologue: ; 0DFC
-	INCBIN "eCardCreator/build/prologue-{REGION_NAME}.bin"
+	INCBIN "eCardCreator/build/output/prologue-{REGION_NAME}.bin"
 
 DataPacket: ; 0E38
-	INCBIN "eCardCreator/build/{TRAINER}-{REGION_NAME}.mev"
+	INCBIN "eCardCreator/build/output/{TRAINER}-{REGION_NAME}.mev"
 	REPT 44
 		db 0 ; pads the data to 256 bytes
 	ENDR

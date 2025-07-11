@@ -378,16 +378,6 @@
     height: inherit;
   }
 
-  input[type=submit] {
-    background-color: rgb(3, 135, 91);
-    color: rgb(255, 255, 255);
-    border-color: rgb(3, 135, 91);
-    padding: 2px;
-    border-radius: 4px;
-    width: 100px;
-    height: 30px;
-  }
-
   /* Dropdown Button */
   .btn {
     background-color: rgb(3, 135, 91);
@@ -410,8 +400,9 @@
     display: none;
     position: absolute;
     background-color: #f1f1f1;
-    min-width: 160px;
+    min-width: 100px;
     z-index: 1;
+    right: 100;
   }
 
   /* Links inside the dropdown */
@@ -422,8 +413,26 @@
     display: block;
   }
 
+  /* Links inside the dropdown */
+  .dropdown-download button {
+    color: black;
+    background-color: #f1f1f1;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16;
+  }
+
+
   /* Change color of dropdown links on hover */
   .dropdown-download a:hover {background-color: #ddd}
+
+  /* Change color of dropdown links on hover */
+  .dropdown-download button:hover {background-color: #ddd}
 
   /* Show the dropdown menu on hover */
   .dropdown2:hover .dropdown-download {
@@ -1042,15 +1051,15 @@ Press the B button to cancel.</textarea>
   </div>
   <div class="break"></div>
   <div class="submitbuttons">
-    <button class="btn">Download</button>
+    <button class="btn" name="type" value="raw" >Download</button>
     <div class="dropdown2">
-      <button class="btn" style="border-left:1px solid rgb(3, 135, 91); border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
+      <button class="btn"  name="type" style="border-left:1px solid rgb(3, 135, 91); border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-download">
-        <a href="#">.raw File</a>
-        <a href="#">.bmp Image</a>
-        <a href="#">Downlad All</a>
+        <button class="bt" name="type" value="raw" >.raw File</button>
+        <button class="bt" name="type" value="bmp" >.bmp Image</button>
+        <button class="bt" name="type" value="all" >Download All</button>
       </div>
     </div>
   </div>

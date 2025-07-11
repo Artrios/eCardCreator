@@ -5,6 +5,7 @@ import eCardCreator.regionalize
 import eCardCreator.stripgbc
 import eCardCreator.ereadertext
 import eCardCreator.checksum
+import zipfile
 
 from flask import (
     Blueprint, flash, g, redirect, render_template, request, session, url_for, send_file
@@ -51,10 +52,27 @@ def cardmaker():
         subprocess.run(["eCardCreator/bin/nedc/nedcmake", "-i", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.vpk", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}", "-type", "1", "-region", "1"])
         subprocess.run(["eCardCreator/bin/nedc/raw2bmp", "-i", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01", "-dpi", "600"])
 
-        try:
-            return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw")
-        except Exception as e:
-            return str(e)
+        if request.form['type'] == "raw":
+            try:
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw")
+            except Exception as e:
+                return str(e)
+        elif request.form['type'] == "bmp":
+            try:
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp", as_attachment=True)
+            except Exception as e:
+                return str(e)
+        else:
+            try:
+                zip_file_path = f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.zip"
+                with zipfile.ZipFile(zip_file_path, 'w') as myzip:
+                    myzip.write(f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw", arcname=f"{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw")
+                    myzip.write(f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp", arcname=f"{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp")
+                    myzip.write(f"eCardCreator/build/{request.form['TrainerName']}.asm", arcname=f"{request.form['TrainerName']}.asm")
+                    myzip.write(f"eCardCreator/build/{request.form['TrainerName']}-card.asm", arcname=f"{request.form['TrainerName']}-card.asm")
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.zip")
+            except Exception as e:
+                return str(e)
 
 
     pokelist=[]
@@ -142,9 +160,11 @@ def get_class(trainerclass):
             
 
 def get_color(hexcol):
-    rcol=int(hexcol[1:2], 16)
-    gcol=int(hexcol[3:4], 16)
-    bcol=int(hexcol[5:6], 16)
+    print(hexcol)
+    rcol=int(hexcol[1:3], 16)
+    gcol=int(hexcol[3:5], 16)
+    bcol=int(hexcol[5:7], 16)
+    print(gcol)
     return f'{rcol>>3}, {gcol>>3}, {bcol>>3}'
 
 def check_empty(formval):
@@ -207,8 +227,8 @@ def print_request_form(in_form):
     with open(f"eCardCreator/build/{in_form["TrainerName"]}-card.asm","w") as outfile:
         outfile.write('INCLUDE "eCardCreator/build/card_macros.asm"\n')
         outfile.write(f'DEF CLASS EQUS   "{get_class(in_form["TrainerClass"]).lower()}"\n')
-        outfile.write('DEF TRAINER EQUS "devin"\n')
-        outfile.write(f'INCLUDE "eCardCreator/build/battletrainer-{get_region(in_form['LanguageSelect'])}.tx"\n')
+        outfile.write(f'DEF TRAINER EQUS "{in_form["TrainerName"]}"\n')
+        outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{get_region(in_form['LanguageSelect'])}.tx"\n')
 
     with open(f"eCardCreator/build/sprites/battletrainer1.pal","w") as outfile:
         outfile.write('	RGB  0,  0,  0\n')
