@@ -1,4 +1,4 @@
-----------=$0000
+----------=$FFFF
 BULBASAUR=$0001
 IVYSAUR=$0002
 VENUSAUR=$0003

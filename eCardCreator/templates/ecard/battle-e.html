@@ -72,6 +72,7 @@
   form {
     display: flex;
     align-items: flex-start;
+    justify-content: left;
     flex-wrap: wrap;
     gap: 8px;
     flex-direction: row;
@@ -327,6 +328,13 @@
     margin-left: 5px;
   }
 
+  #pp-field
+  {
+    height:18px;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+
   #iv-field
   {
     width:45px;
@@ -382,10 +390,10 @@
 
   /* Dropdown Button */
   .btn {
-    background-color: #2196F3;
+    background-color: rgb(3, 135, 91);
     color: white;
     padding: 2px;
-    border-color: #2196F3;
+    border-color: rgb(3, 135, 91);
     border-radius: 4px 0 0 4px;
     height: 30px;
     border-right-style: none;
@@ -424,7 +432,7 @@
 
   /* Change the background color of the dropdown button when the dropdown content is shown */
   .dropdown2:hover .btn  {
-    background-color: #0b7dda;
+    background-color: rgb(3, 102, 69);
   }
 
   .break {
@@ -978,6 +986,7 @@ Press the B button to cancel.</textarea>
               </ul>
             </div>
           </div>
+          <input type="number" id="pp-field" name="Pokemon{{i}}PP1" placeholder="PP" min="0" max="3" />
           <div class="dropdown-box">
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move2" value="-----------" readonly id="Pokemon{{i}}Move2">
@@ -993,6 +1002,7 @@ Press the B button to cancel.</textarea>
               </ul>
             </div>
           </div>
+          <input type="number" id="pp-field" name="Pokemon{{i}}PP2" placeholder="PP" min="0" max="3" />
           <div class="dropdown-box">
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move3" value="-----------" readonly id="Pokemon{{i}}Move3">
@@ -1008,6 +1018,7 @@ Press the B button to cancel.</textarea>
               </ul>
             </div>
           </div>
+          <input type="number" id="pp-field" name="Pokemon{{i}}PP3" placeholder="PP" min="0" max="3" />
           <div class="dropdown-box">
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move4" value="-----------" readonly id="Pokemon{{i}}Move4">
@@ -1023,6 +1034,7 @@ Press the B button to cancel.</textarea>
               </ul>
             </div>
           </div>
+          <input type="number" id="pp-field" name="Pokemon{{i}}PP4" placeholder="PP" min="0" max="3" />
         </div>
       </div>
     </div>
@@ -1032,7 +1044,7 @@ Press the B button to cancel.</textarea>
   <div class="submitbuttons">
     <button class="btn">Download</button>
     <div class="dropdown2">
-      <button class="btn" style="border-left:1px solid navy; border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
+      <button class="btn" style="border-left:1px solid rgb(3, 135, 91); border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-download">
@@ -1041,7 +1053,6 @@ Press the B button to cancel.</textarea>
         <a href="#">Downlad All</a>
       </div>
     </div>
-    <input type="submit" value="Generate">
   </div>
 </form>
 
