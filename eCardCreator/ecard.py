@@ -229,6 +229,13 @@ def print_request_form(in_form):
         outfile.write(f'DEF CLASS EQUS   "{get_class(in_form["TrainerClass"]).lower()}"\n')
         outfile.write(f'DEF TRAINER EQUS "{in_form["TrainerName"]}"\n')
         outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{get_region(in_form['LanguageSelect'])}.tx"\n')
+        outfile.write(f'DEF BOX1LINE1 EQUS "{in_form["sendText"].split("\r\n")[0]}\\n"\n')
+        outfile.write(f'DEF BOX1LINE2 EQUS "{in_form["sendText"].split("\r\n")[1]}\\n"\n')
+        outfile.write(f'DEF BOX1LINE3 EQUS "{in_form["sendText"].split("\r\n")[2]}\\n"\n')
+        outfile.write(f'DEF BOX1LINE4 EQUS "{in_form["sendText"].split("\r\n")[3]}\\0"\n')
+        outfile.write(f'DEF BOX2LINE1 EQUS "{in_form["sendText2"].split("\r\n")[0]}\\n"\n')
+        outfile.write(f'DEF BOX2LINE2 EQUS "{in_form["sendText2"].split("\r\n")[1]}\\n"\n')
+        outfile.write(f'DEF BOX2LINE3 EQUS "{in_form["sendText2"].split("\r\n")[2]}\\0"\n')
 
     with open(f"eCardCreator/build/sprites/battletrainer1.pal","w") as outfile:
         outfile.write('	RGB  0,  0,  0\n')

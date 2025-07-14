@@ -423,14 +423,17 @@ window.addEventListener("load", () => {
 function openDoors() {
   // Get the checkbox
   var checkBox = document.getElementById("myCheck");
+  var textBox = document.getElementsByName("sendText2");
 
   if (checkBox.innerHTML == "Open Doors"){
     checkBox.innerHTML = "Close Doors";
     ctx3.clearRect(0, 0, 240, 160);
+    textBox[0].style.visibility = "visible";
   } else {
     checkBox.innerHTML = "Open Doors";
     ctx3.putImageData(imageData3,88, 32);
     ctx3.putImageData(imageData3,88, 64);
+    textBox[0].style.visibility = "hidden";
   }
 };
 

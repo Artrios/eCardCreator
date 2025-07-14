@@ -310,9 +310,9 @@
       width:240px;
       font-size: 11px;
       line-height: 1.0;
-      padding: 0px 8px;
+      padding: 0px 0px 0px 8px;
       letter-spacing: 0px;
-      word-spacing: 1px;
+      word-spacing: 0px;
       background-color:black;
       color:white;
       border: none;
@@ -821,8 +821,13 @@
         <canvas id="layer1-canvas" width="240" height="112" style="position: relative; left: 0; top: 0; z-index: 0;"></canvas>
         <canvas id="layer2-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -112; z-index: 1;"></canvas>
         <canvas id="layer3-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -224; z-index: 2;"></canvas>
-        <textarea name="sendText" id="sendText" rows="4">Link e-Reader to Pokemon Ruby or Sapphire and select MYSTERY EVENTS on the game's main menu.
+        <textarea name="sendText" id="sendText" rows="4">Link e-Reader to Pokemon Ruby or 
+Sapphire and select MYSTERY EVENTS
+on the game's main menu.
 Press the B button to cancel.</textarea>
+        <textarea name="sendText2" id="sendText" rows="3" style="position: relative; left: 0; top: -270; z-index: 2; visibility:hidden;">Press the A Button on the Game Boy
+Advance containing Pokémon Ruby or
+Sapphire to begin the Battle Entry.</textarea>
       </div>
       <div class="tilemapInfo" id="divImageInfo" style="position: relative;">
         <input type="color" id="pal-1-1" name="colorChooser11" class="colorChooser11" value="#00ff00">
