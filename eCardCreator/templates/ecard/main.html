@@ -1,0 +1,495 @@
+<!---link rel="stylesheet" href="{{ url_for('static', filename='css/crt.css') }}"-->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<head>
+  <!--<script src="{{ url_for('static', filename='js/script.js') }}" type="module"></script> -->
+  <script type="text/javascript" src="{{ url_for('static',filename='js/script.js') }}">
+  </script>
+</head>
+
+
+{% block content %}
+<style>
+  body {
+    background-color: rgb(36, 36, 36);
+  }
+
+  input[type=text] {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+  }
+
+  input[type=number] {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+    -moz-appearance: textfield;
+  }
+
+  select {
+    background-color: rgb(36, 36, 36);
+    color: rgb(255, 255, 255);
+    border-width: 1px;
+  }
+
+  #myCheck {
+    background-color: rgb(3, 135, 91);
+    color: rgb(255, 255, 255);
+    border-color: rgb(3, 135, 91);
+    padding: 2px;
+    border-radius: 4px;
+  }
+
+  input[type=submit] {
+    background-color: rgb(3, 135, 91);
+    color: rgb(255, 255, 255);
+    border-color: rgb(3, 135, 91);
+    padding: 2px;
+    border-radius: 4px;
+    width: 100px;
+    height: 30px;
+  }
+
+  .submitbuttons {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 120px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-right: 90px;
+    justify-content: flex-end;
+  }
+
+  #myHeader {
+    background-color: rgb(26, 26, 26);
+    color: rgb(255, 255, 255);
+    text-align: left;
+    margin-bottom: 10px;
+    padding-left: 10px;
+  }
+  
+  form {
+    display: flex;
+    align-items: flex-start;
+    justify-content: left;
+    flex-wrap: wrap;
+    gap: 8px;
+    flex-direction: row;
+    background-color: rgb(36, 36, 36);
+    color: antiquewhite;
+  }
+
+  .name {
+    flex-grow: 1;
+    flex-basis: 10px;
+  }
+
+  .email {
+    flex-grow: 3;
+    flex-basis: 10px;
+  }
+
+  .trainerdetails1 {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+  }
+
+  .tilemapdetails{
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 20px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    padding: 20px 0px;
+    height: 160px;
+  }
+
+  .trainerdetails {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-direction: column;
+    padding-left: 50px;
+  }
+
+  .pokemon {
+    display: flex;
+    flex-grow: 6;
+    flex-basis: 100px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-between;
+    border-collapse: separate;
+    border-spacing: 15px;
+    padding: 12px;
+    gap: 40px;
+    border-radius: 10px;
+    background-color: rgb(53, 53, 53);
+    margin-right: 90px;
+  }
+
+  .pokemondetails {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-direction: column;
+    min-width: 355px;
+    max-width: 360px;
+    gap: 5px;
+  }
+
+  .pokemondetailsline {
+    display: flex;
+    flex-grow: 1;
+    flex-basis: 10px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding-bottom: 2px;
+  }
+
+  .easychatsection {
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-wrap: wrap;
+    flex-direction: column;
+    padding-top: 20px;
+  }
+
+  .easychat {
+    display: flex;
+    flex-grow: 3;
+    flex-basis: 10px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    max-width: 400px;
+  }
+
+  .inputPair {
+    display: flex;
+    flex-direction: column;
+    margin-right: 10px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tilemap {
+    width: 240px;
+    height: 160px;
+    position: relative;
+    justify-content: center;
+  }
+
+  .tilemapInfo {
+    position: relative;
+    padding: 10px 10px;
+  }
+
+  .dropdown-box {
+    width: 120px;
+    height: 18px;
+    position: relative;
+    justify-content: left;
+    margin-right: 3px;
+    margin-bottom: 5px;
+    padding-top: 5px;
+  }
+
+  .dropdown-box input {
+    width: 100%;
+    height: 18px;
+    border: solid rgb(151, 151, 151) rgb(226, 226, 226) rgb(226, 226, 226) rgb(151, 151, 151);
+    outline: none;
+    border-radius: 4px;
+    padding: 3px 5px;
+    color: rgb(255, 255, 255);
+  }
+
+  .dropdown-box .selected-item {
+    position: relative;
+  }
+
+  .dropdown-box .selected-item::after {
+    content: "";
+    width: 3px;
+    height: 3px;
+    border: 2px solid;
+    border-color: transparent rgb(129, 129, 129) rgb(129, 129, 129) transparent;
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-70%) rotate(45deg);
+  }
+
+  .dropdown-box .selected-item,
+  .dropdown-box .selected-item input {
+    cursor: pointer;
+  }
+
+  .dropdown-box .dropdown-content {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.671);
+    border-radius: 5px;
+    max-height: 300px;
+    overflow: auto;
+    display: none;
+    position: absolute;
+    z-index: 99;
+    background-color: rgb(36, 36, 36);
+    width: 100%;
+    justify-content: left;
+  }
+
+  .dropdown-box.active .dropdown-content {
+    display: block;
+    width: 100%;
+    justify-content: left;
+  }
+
+  .dropdown-box .dropdown-content .search-input {
+    justify-content: left;
+    padding: 5px;
+    width: 90%;
+  }
+
+  .dropdown-box .dropdown-content ul {
+    list-style: none;
+  }
+
+  .dropdown-box .dropdown-content ul li {
+    font-size: 0.8rem;
+    padding: 2px 2px;
+    cursor: pointer;
+  }
+
+  .dropdown-box .dropdown-content ul li.hide {
+    display: none;
+  }
+
+  .dropdown-box .dropdown-content ul li:hover {
+    background-color: rgb(224 224 230);
+  }
+
+  .dropdown-box .dropdown-content ul li.active {
+    background-color: rgb(213 245 245);
+    color: rgb(34 34 218);
+  }
+
+  input[type=color] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    border: none;
+    border-radius: 3pt;
+    box-shadow: 0 0 0 1pt rgb(63, 63, 63);
+    outline-color: transparent;
+  }
+  input[type=color]::-webkit-color-swatch {
+    border-radius: 3px;
+    border: none;
+  }
+  input[type=color]::-moz-color-swatch {
+    border-radius: 3px;
+    border: none;
+  }
+
+  #sendText
+  {
+      height:48px;
+      width:240px;
+      font-size: 11px;
+      line-height: 1.0;
+      padding: 0px 0px 0px 8px;
+      letter-spacing: 0px;
+      word-spacing: 0px;
+      background-color:black;
+      color:white;
+      border: none;
+      resize: none;
+      position: relative;
+      top: -224px;
+  }
+
+  #ev-field
+  {
+    width:45px;
+    height:20px;
+    margin-left: 5px;
+  }
+
+  #pp-field
+  {
+    height:18px;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+
+  #iv-field
+  {
+    width:45px;
+    height:20px;
+    margin-left: 5px;
+  }
+
+  ul.navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: rgb(26, 26, 26);
+    margin-bottom: 10px;
+  }
+
+  ul.navbar li {
+    float: left;
+    height: 45px;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.navbar li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 5px 16px;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+  }
+
+  ul.navbar li a:hover {
+    background-color: #111;
+    height: inherit;
+  }
+
+  ul.navbar li a.active {
+    background-color: rgb(3, 135, 91);
+    height: inherit;
+  }
+
+  /* Dropdown Button */
+  .btn {
+    background-color: rgb(3, 135, 91);
+    color: white;
+    padding: 2px;
+    border-color: rgb(3, 135, 91);
+    border-radius: 4px 0 0 4px;
+    height: 30px;
+    border-right-style: none;
+  }
+
+  .cardoptionbuttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    height: 85%;
+    align-items: center;
+  }
+
+  .btn2 {
+    background-color: rgb(3, 135, 91);
+    color: white;
+    padding: 2px;
+    margin: 10px;
+    border-color: rgb(3, 135, 91);
+    border-radius: 4px 4px 4px 4px;
+    height: 150px;
+    width: 150px;
+    font-size: 26px;
+    text-align: center;
+    cursor: pointer;
+  }
+
+  /* The container <div> - needed to position the dropdown content */
+  .dropdown2 {
+    display: inline-block;
+    padding-right: 10px;
+  }
+
+  /* Dropdown Content (Hidden by Default) */
+  .dropdown-download {
+    display: none;
+    position: absolute;
+    background-color: #f1f1f1;
+    min-width: 100px;
+    z-index: 1;
+    right: 100;
+  }
+
+  /* Links inside the dropdown */
+  .dropdown-download a {
+    color: black;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+  }
+
+  /* Links inside the dropdown */
+  .dropdown-download button {
+    color: black;
+    background-color: #f1f1f1;
+    padding: 12px 10px;
+    text-decoration: none;
+    display: block;
+    border: none;
+    width: 100%;
+    text-align: left;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16;
+  }
+
+
+  /* Change color of dropdown links on hover */
+  .dropdown-download a:hover {background-color: #ddd}
+
+  /* Change color of dropdown links on hover */
+  .dropdown-download button:hover {background-color: #ddd}
+
+  /* Show the dropdown menu on hover */
+  .dropdown2:hover .dropdown-download {
+    display: block;
+  }
+
+  /* Change the background color of the dropdown button when the dropdown content is shown */
+  .dropdown2:hover .btn  {
+    background-color: rgb(3, 102, 69);
+  }
+
+  .break {
+    flex-basis: 100%;
+    height: 0;
+  }
+
+</style>
+
+
+<ul class="navbar">
+  <li><a class="active" href=""><h1 style="font-size:30;">Battle-e</h1></a></li>
+  <li><a href="battle_trainer">Battle Trainer</a></li>
+  <li><a href="trainer_tower">Trainer Tower</a></li>
+  <li><a href="trainer_hill">Trainer Hill</a></li>
+</ul> 
+
+<div class="cardoptionbuttons">
+  <a href="battle_trainer">
+    <button class="btn2" name="type" ><b>Battle Trainer</b></button>
+  </a>
+  <a href="trainer_tower">
+  <button class="btn2" name="type" ><b>Trainer Tower</b></button>
+  </a>
+  <a href="trainer_hill">
+    <button class="btn2" name="type" ><b>Trainer Hill</b></button>
+  </a>
+</div>
+{% endblock %}
