@@ -18,12 +18,14 @@
     background-color: rgb(36, 36, 36);
     color: rgb(255, 255, 255);
     border-width: 1px;
+    padding-left: 3px;
   }
 
   input[type=number] {
     background-color: rgb(36, 36, 36);
     color: rgb(255, 255, 255);
     border-width: 1px;
+    padding-left: 3px;
     -moz-appearance: textfield;
   }
 
@@ -31,6 +33,7 @@
     background-color: rgb(36, 36, 36);
     color: rgb(255, 255, 255);
     border-width: 1px;
+    padding-left: 3px;
   }
 
   #myCheck {
@@ -189,7 +192,7 @@
 
   .tilemapInfo {
     position: relative;
-    padding: 10px 10px;
+    padding: 0px 10px 10px 10px;
   }
 
   .dropdown-box {
@@ -821,7 +824,7 @@
         <canvas id="layer1-canvas" width="240" height="112" style="position: relative; left: 0; top: 0; z-index: 0;"></canvas>
         <canvas id="layer2-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -112; z-index: 1;"></canvas>
         <canvas id="layer3-canvas" width="240" height="112" style="background-color: transparent; position: relative; left: 0; top: -224; z-index: 2;"></canvas>
-        <textarea name="sendText" id="sendText" rows="4">Link e-Reader to Pokemon Ruby or 
+        <textarea name="sendText" id="sendText" rows="4">Link e-Reader to Pokémon Ruby or 
 Sapphire and select MYSTERY EVENTS
 on the game's main menu.
 Press the B button to cancel.</textarea>
@@ -962,7 +965,7 @@ Sapphire to begin the Battle Entry.</textarea>
         </div>
       </div>
       <div class=pokemondetailsline>
-        <label class="name" for="ev-field{{i}}" style="width:20px;">
+        <label class="name" for="ev-field{{i}}" style="width:10px; margin-right: 0px;">
           EVs</label>
         <input type="number" id="ev-field{{i}}" name="Pokemon{{i}}HPEV" placeholder="HP" min="0" max="255" style="width:45px; height:20px;" />
         <input type="number" id="ev-field" name="Pokemon{{i}}AtkEV" placeholder="Atk" min="0" max="255" />
