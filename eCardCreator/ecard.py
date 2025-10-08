@@ -14,9 +14,14 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from eCardCreator.db import get_db
 
-bp = Blueprint('ecard', __name__, url_prefix='/ecard')
+bp = Blueprint('main', __name__, url_prefix='/')
 
-@bp.route('/battle-e', methods=('GET', 'POST'))
+@bp.route('/', methods=('GET', 'POST'))
+def mainpage():
+
+    return render_template('ecard/main.html')
+
+@bp.route('/battle_trainer', methods=('GET', 'POST'))
 def cardmaker():
     if request.method == 'POST':
         print_request_form(request.form)
@@ -82,7 +87,7 @@ def cardmaker():
     movelist=[]
     easychat=[]
 
-    with open("eCardCreator/data/Pokemon.txt","r") as infile:
+    with open("eCardCreator/data/Pokemon_EN.txt","r") as infile:
         for line in infile:
             pokelist.append(line.split('=')[0])
 
@@ -102,7 +107,7 @@ def cardmaker():
         for line in infile:
             movelist.append(line.split('=')[0])
 
-    with open("eCardCreator/data/EasyChat.txt","r") as infile:
+    with open("eCardCreator/data/EasyChat_EN.txt","r") as infile:
         for line in infile:
             easychat.append(line.split('=')[0])
     
@@ -123,15 +128,15 @@ def get_region(region):
         case "4":
             return "IT"
 
-def get_easy(easy_chat):
-    with open("eCardCreator/data/EasyChat.txt","r") as infile:
+def get_easy(easy_chat,region):
+    with open(f"eCardCreator/data/EasyChat_{region}.txt","r") as infile:
         for line in infile:
             if easy_chat==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return '$FFFF'
 
 def get_pokemon(pokemon):
-    with open("eCardCreator/data/Pokemon.txt","r") as infile:
+    with open("eCardCreator/data/Pokemon_EN.txt","r") as infile:
         for line in infile:
             if pokemon==line.split('=')[0]:
                 return line.split('=')[1].strip()
@@ -182,9 +187,9 @@ def print_request_form(in_form):
         outfile.write(f'    Text_{get_region(in_form['LanguageSelect'])} "{in_form["TrainerName"]}"8\n')
         outfile.write(f'    OT_ID 00000,00000\n')
         outfile.write('\n')
-        outfile.write(f'    Intro_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["intro1"])},{get_easy(in_form["intro2"])},{get_easy(in_form["intro3"])},{get_easy(in_form["intro4"])},{get_easy(in_form["intro5"])},{get_easy(in_form["intro6"])}\n')
-        outfile.write(f'    Win_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["win1"])},{get_easy(in_form["win2"])},{get_easy(in_form["win3"])},{get_easy(in_form["win4"])},{get_easy(in_form["win5"])},{get_easy(in_form["win6"])}\n')
-        outfile.write(f'    Loss_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["lose1"])},{get_easy(in_form["lose2"])},{get_easy(in_form["lose3"])},{get_easy(in_form["lose4"])},{get_easy(in_form["lose5"])},{get_easy(in_form["lose6"])}\n')
+        outfile.write(f'    Intro_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["intro1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro6"],get_region(in_form['LanguageSelect']))}\n')
+        outfile.write(f'    Win_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["win1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win6"],get_region(in_form['LanguageSelect']))}\n')
+        outfile.write(f'    Loss_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["lose1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose6"],get_region(in_form['LanguageSelect']))}\n')
         outfile.write('\n')
         outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon1"])}\n')
         outfile.write(f'    Holds {get_item(in_form["Pokemon1Item"])}\n')

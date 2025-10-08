@@ -273,7 +273,7 @@
   }
 
   .dropdown-box .dropdown-content ul li:hover {
-    background-color: rgb(224 224 230);
+    background-color: rgb(59, 59, 59);
   }
 
   .dropdown-box .dropdown-content ul li.active {
@@ -453,7 +453,7 @@
 
 
  <ul class="navbar">
-  <li><a href="battle-e"><h1 style="font-size:30;">Battle-e</h1></a></li>
+  <li><a href="/"><h1 style="font-size:30;">Battle-e</h1></a></li>
   <li><a class="active" href="battle_trainer">Battle Trainer</a></li>
   <li><a href="trainer_tower">Trainer Tower</a></li>
   <li><a href="trainer_hill">Trainer Hill</a></li>
@@ -475,11 +475,11 @@
         </select>
       </div>
       <div class="inputPair">
-        <label class="name" for="language-field">
+        <label class="LanguageClass" for="language-field">
           Language</label>
-        <select name="LanguageSelect" class="LanguageSelect" id="language-field">
+        <select name="LanguageSelect" class="LanguageSelect" id="language-field" onchange="changeLanguage()">
           <option value=0>Japanese</option>
-          <option value=1>English</option>
+          <option value=1 selected="selected">English</option>
           <option value=2>German</option>
           <option value=3>French</option>
           <option value=4>Italian</option>
@@ -497,7 +497,7 @@
       <div class="inputPair">
         <label class="name" for="name-field">
           Trainer Name</label>
-        <input type="text" id="name-field" name="TrainerName" maxlength="8" />
+        <input type="text" id="name-field" name="TrainerName" maxlength="8" required />
       </div>
       <div class="inputPair">
         <label class="name" for="class-field">
@@ -533,7 +533,7 @@
             <div class="selected-item">
               <input type="text" name="intro1" value="-----------" readonly id="intro1">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -548,7 +548,7 @@
             <div class="selected-item">
               <input type="text" name="intro2" value="-----------" readonly id="intro2">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -563,7 +563,7 @@
             <div class="selected-item">
               <input type="text" name="intro3" value="-----------" readonly id="intro3">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -578,7 +578,7 @@
             <div class="selected-item">
               <input type="text" name="intro4" value="-----------" readonly id="intro4">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -593,7 +593,7 @@
             <div class="selected-item">
               <input type="text" name="intro5" value="-----------" readonly id="intro5">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -608,7 +608,7 @@
             <div class="selected-item">
               <input type="text" name="intro6" value="-----------" readonly id="intro6">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -630,7 +630,7 @@
             <div class="selected-item">
               <input type="text" name="win1" value="-----------" readonly id="win1">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -645,7 +645,7 @@
             <div class="selected-item">
               <input type="text" name="win2" value="-----------" readonly id="win2">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -660,7 +660,7 @@
             <div class="selected-item">
               <input type="text" name="win3" value="-----------" readonly id="win3">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -675,7 +675,7 @@
             <div class="selected-item">
               <input type="text" name="win4" value="-----------" readonly id="win4">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -690,7 +690,7 @@
             <div class="selected-item">
               <input type="text" name="win5" value="-----------" readonly id="win5">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -705,7 +705,7 @@
             <div class="selected-item">
               <input type="text" name="win6" value="-----------" readonly id="win6">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -727,7 +727,7 @@
             <div class="selected-item">
               <input type="text" name="lose1" value="-----------" readonly id="lose1">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -742,7 +742,7 @@
             <div class="selected-item">
               <input type="text" name="lose2" value="-----------" readonly id="lose2">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -757,7 +757,7 @@
             <div class="selected-item">
               <input type="text" name="lose3" value="-----------" readonly id="lose3">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -772,7 +772,7 @@
             <div class="selected-item">
               <input type="text" name="lose4" value="-----------" readonly id="lose4">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -787,7 +787,7 @@
             <div class="selected-item">
               <input type="text" name="lose5" value="-----------" readonly id="lose5">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -802,7 +802,7 @@
             <div class="selected-item">
               <input type="text" name="lose6" value="-----------" readonly id="lose6">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="easychat" name="easychat">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -874,7 +874,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item" id="Pokemon">
               <input type="text" name="Pokemon{{i}}" value="-----------" readonly id="Pokemon{{i}}">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" id="pokemondropdown" name="pokemondropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>

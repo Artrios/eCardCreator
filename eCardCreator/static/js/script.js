@@ -199,7 +199,6 @@ function getPalette(palettepath) {
 
 
 window.addEventListener("load", () => {
-    const dropdownItems = document.querySelectorAll(".dropdown-item");
     const searchInput = document.querySelectorAll(".search-input input");
     const dropdownContent = document.querySelectorAll(".dropdown-content");
     const selectedItem = document.querySelectorAll(".selected-item");
@@ -450,4 +449,47 @@ function changeColour() {
     ctx3.putImageData(imageData3,88, 32);
     ctx3.putImageData(imageData3,88, 64);
   }
+};
+
+function changeLanguage() {
+    var languageBox = document.getElementById("language-field");
+    const easydropdownContent = document.getElementsByName("easychat");
+    var lang = "EN";
+
+    var xmlhttp = new XMLHttpRequest();
+    if (languageBox.value == 0) {
+        lang="JP";
+    }
+    else if (languageBox.value == 1) {
+        lang = "EN";
+    }
+    else if (languageBox.value == 2) {
+        lang = "DE";
+    }
+    else if (languageBox.value == 3) {
+        lang = "FR";
+    }
+    else if (languageBox.value == 4) {
+        lang = "IT";
+    }
+    else if (languageBox.value == 5) {
+        lang = "ES";
+    }
+
+    xmlhttp.open("GET", '/data/EasyChat_'+lang+'.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    console.log(easydropdownContent[1].children[1].children[1]);
+    for(let i = 0; i < easydropdownContent.length; i++){
+        for(let j = 0; j < easydropdownContent[i].children[1].children.length; j++){
+            easydropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
+        }
+    }
+    
 };
