@@ -454,6 +454,7 @@ function changeColour() {
 function changeLanguage() {
     var languageBox = document.getElementById("language-field");
     const easydropdownContent = document.getElementsByName("easychat");
+    const pokemondropdownContent = document.getElementsByName("pokemondropdown");
     var lang = "EN";
 
     var xmlhttp = new XMLHttpRequest();
@@ -489,6 +490,23 @@ function changeLanguage() {
     for(let i = 0; i < easydropdownContent.length; i++){
         for(let j = 0; j < easydropdownContent[i].children[1].children.length; j++){
             easydropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
+        }
+    }
+
+
+    xmlhttp.open("GET", '/data/Pokemon_'+lang+'.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    console.log(pokemondropdownContent[1].children[1].children[1]);
+    for(let i = 0; i < pokemondropdownContent.length; i++){
+        for(let j = 0; j < pokemondropdownContent[i].children[1].children.length; j++){
+            pokemondropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
         }
     }
     
