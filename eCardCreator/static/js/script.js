@@ -1,10 +1,30 @@
 function pokemonchoicechange(val,outselect){
-
+    var languageBox = document.getElementById("language-field");
     var abilitychoice = document.getElementById(outselect);
+
+    var lang = "EN";
+    if (languageBox.value == 0) {
+        lang="JP";
+    }
+    else if (languageBox.value == 1) {
+        lang = "EN";
+    }
+    else if (languageBox.value == 2) {
+        lang = "DE";
+    }
+    else if (languageBox.value == 3) {
+        lang = "FR";
+    }
+    else if (languageBox.value == 4) {
+        lang = "IT";
+    }
+    else if (languageBox.value == 5) {
+        lang = "ES";
+    }
 
     var result = null;
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", '/data/Abilities.txt', false);
+    xmlhttp.open("GET", '/data/Abilities_'+lang+'.txt', false);
     xmlhttp.send();
     if (xmlhttp.status==200) {
         result = xmlhttp.responseText;
@@ -16,8 +36,8 @@ function pokemonchoicechange(val,outselect){
 
     for (let i = 0; i < abilities.length; i++) {
 
-        if(abilities[i].includes(val.replace(" ","_")+"_")){
-            items.push(abilities[i].replace(val.replace(" ","_")+"_","").split(" ")[0].replace("_"," "));
+        if(abilities[i].includes(val.replace(" ","_")+"=")){
+            items.push(abilities[i].replace(val.replace(" ","_")+"=","").split("=")[0].replace("_"," "));
             count++;
 
         }
@@ -455,6 +475,9 @@ function changeLanguage() {
     var languageBox = document.getElementById("language-field");
     const easydropdownContent = document.getElementsByName("easychat");
     const pokemondropdownContent = document.getElementsByName("pokemondropdown");
+    const movedropdownContent = document.getElementsByName("movedropdown");
+    const itemdropdownContent = document.getElementsByName("itemdropdown");
+    const naturedropdownContent = document.getElementsByName("naturedropdown");
     var lang = "EN";
 
     var xmlhttp = new XMLHttpRequest();
@@ -507,6 +530,52 @@ function changeLanguage() {
     for(let i = 0; i < pokemondropdownContent.length; i++){
         for(let j = 0; j < pokemondropdownContent[i].children[1].children.length; j++){
             pokemondropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
+        }
+    }
+
+    xmlhttp.open("GET", '/data/Moves_'+lang+'.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    console.log(movedropdownContent[1].children[1].children[1]);
+    for(let i = 0; i < movedropdownContent.length; i++){
+        for(let j = 0; j < movedropdownContent[i].children[1].children.length; j++){
+            movedropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
+        }
+    }
+
+    xmlhttp.open("GET", '/data/Items_'+lang+'.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    for(let i = 0; i < itemdropdownContent.length; i++){
+        for(let j = 0; j < itemdropdownContent[i].children[1].children.length; j++){
+            itemdropdownContent[i].children[1].children[j].innerHTML=easyTextLines[j].split('=')[0];
+        }
+    }
+
+    xmlhttp.open("GET", '/data/Natures_'+lang+'.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    for(let i = 0; i < naturedropdownContent.length; i++){
+        for(let j = 0; j < naturedropdownContent[i].length; j++){
+            naturedropdownContent[i].children[j].innerHTML=easyTextLines[j];
         }
     }
     

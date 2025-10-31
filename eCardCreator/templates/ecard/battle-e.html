@@ -894,19 +894,19 @@ Sapphire to begin the Battle Entry.</textarea>
           </div>
         </div>
         <div class="inputPair" style="width:22%">
-          <label class="name" for="Pokemon{{i}}PID">
+          <label class="name" for="Pokemon{{i}}PID" hidden>
             PID</label>
-          <input type="number" id="Pokemon{{i}}PID" name="Pokemon{{i}}PID" value="0" min="0" max="4294967295"/>
+          <input type="number" id="Pokemon{{i}}PID" hidden name="Pokemon{{i}}PID" value="0" min="0" max="4294967295"/>
         </div>
         <div class="inputPair" style="width:12%">
-          <label class="name" for="Pokemon{{i}}TID">
+          <label class="name" for="Pokemon{{i}}TID" hidden>
             TID</label>
-          <input type="number" id="Pokemon{{i}}TID" name="Pokemon{{i}}TID" value="0" min="0" max="65535"/>
+          <input type="number" id="Pokemon{{i}}TID" hidden name="Pokemon{{i}}TID" value="0" min="0" max="65535"/>
         </div>
         <div class="inputPair" style="width:12%">
-          <label class="name" for="Pokemon{{i}}SID">
+          <label class="name" for="Pokemon{{i}}SID" hidden>
             SID</label>
-          <input type="number" id="Pokemon{{i}}SID" name="Pokemon{{i}}SID" value="0" min="0" max="65535"/>
+          <input type="number" id="Pokemon{{i}}SID" hidden name="Pokemon{{i}}SID" value="0" min="0" max="65535"/>
         </div>
       </div>
       <div class=pokemondetailsline>
@@ -942,7 +942,7 @@ Sapphire to begin the Battle Entry.</textarea>
         <div class="inputPair">
           <label class="name" for="nat{{i}}">
             Nature</label>
-          <select name="Pokemon{{i}}Nature" id="nat{{i}}">
+          <select name="naturedropdown" id="nat{{i}}">
             {% for nature in naturelist %}
             <option value={{ loop.index - 1 }}>{{ nature }}</option>
             {% endfor %}
@@ -955,7 +955,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Item" value="-----------" readonly id="item{{i}}">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" name="itemdropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -996,7 +996,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move1" value="-----------" readonly id="Pokemon{{i}}Move1">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" name="movedropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -1012,7 +1012,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move2" value="-----------" readonly id="Pokemon{{i}}Move2">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" name="movedropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -1028,7 +1028,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move3" value="-----------" readonly id="Pokemon{{i}}Move3">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" name="movedropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
@@ -1044,7 +1044,7 @@ Sapphire to begin the Battle Entry.</textarea>
             <div class="selected-item">
               <input type="text" name="Pokemon{{i}}Move4" value="-----------" readonly id="Pokemon{{i}}Move4">
             </div>
-            <div class="dropdown-content">
+            <div class="dropdown-content" name="movedropdown">
               <div class="search-input">
                 <input type="text" name="" id="">
               </div>
