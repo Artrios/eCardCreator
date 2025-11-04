@@ -29,9 +29,9 @@ def create_app(test_config=None):
     def hello():
         return 'Hello, World!'
     
-    @app.route('/data/<file_name>')
-    def get_data(file_name):
-        return send_file(f"data/{file_name}")
+    @app.route('/data/<lang>/<file_name>')
+    def get_data(lang,file_name):
+        return send_file(f"data/{lang}/{file_name}")
     
     @app.route('/data/images/<file_name>')
     def get_image(file_name):

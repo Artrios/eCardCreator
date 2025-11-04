@@ -24,7 +24,7 @@ function pokemonchoicechange(val,outselect){
 
     var result = null;
     var xmlhttp = new XMLHttpRequest();
-    xmlhttp.open("GET", '/data/Abilities_'+lang+'.txt', false);
+    xmlhttp.open("GET", '/data/'+lang+'/Abilities.txt', false);
     xmlhttp.send();
     if (xmlhttp.status==200) {
         result = xmlhttp.responseText;
@@ -477,7 +477,7 @@ function changeLanguage() {
     const pokemondropdownContent = document.getElementsByName("pokemondropdown");
     const movedropdownContent = document.getElementsByName("movedropdown");
     const itemdropdownContent = document.getElementsByName("itemdropdown");
-    const naturedropdownContent = document.getElementsByName("naturedropdown");
+    const classdropdownContent = document.getElementsByName("TrainerClass");
     var lang = "EN";
 
     var xmlhttp = new XMLHttpRequest();
@@ -500,7 +500,27 @@ function changeLanguage() {
         lang = "ES";
     }
 
-    xmlhttp.open("GET", '/data/EasyChat_'+lang+'.txt', false);
+
+    xmlhttp.open("GET", '/data/'+lang+'/TrainerClass.txt', false);
+
+    var easyText = new String();
+    xmlhttp.send();
+    if (xmlhttp.status==200) {
+        easyText=xmlhttp.response;
+    }
+    easyTextLines=easyText.split('\n');
+
+    for(let i = 0; i < classdropdownContent.length; i++){
+        for(let j = 0; j < classdropdownContent[i].length; j++){
+            classdropdownContent[i].children[j].innerHTML=easyTextLines[j];
+        }
+    }
+
+
+
+
+
+    xmlhttp.open("GET", '/data/'+lang+'/EasyChat.txt', false);
 
     var easyText = new String();
     xmlhttp.send();
@@ -517,7 +537,7 @@ function changeLanguage() {
     }
 
 
-    xmlhttp.open("GET", '/data/Pokemon_'+lang+'.txt', false);
+    xmlhttp.open("GET", '/data/'+lang+'/Pokemon.txt', false);
 
     var easyText = new String();
     xmlhttp.send();
@@ -533,7 +553,7 @@ function changeLanguage() {
         }
     }
 
-    xmlhttp.open("GET", '/data/Moves_'+lang+'.txt', false);
+    xmlhttp.open("GET", '/data/'+lang+'/Moves.txt', false);
 
     var easyText = new String();
     xmlhttp.send();
@@ -549,7 +569,7 @@ function changeLanguage() {
         }
     }
 
-    xmlhttp.open("GET", '/data/Items_'+lang+'.txt', false);
+    xmlhttp.open("GET", '/data/'+lang+'/Items.txt', false);
 
     var easyText = new String();
     xmlhttp.send();
@@ -564,7 +584,7 @@ function changeLanguage() {
         }
     }
 
-    xmlhttp.open("GET", '/data/Natures_'+lang+'.txt', false);
+    xmlhttp.open("GET", '/data/'+lang+'/Natures.txt', false);
 
     var easyText = new String();
     xmlhttp.send();
@@ -573,9 +593,11 @@ function changeLanguage() {
     }
     easyTextLines=easyText.split('\n');
 
-    for(let i = 0; i < naturedropdownContent.length; i++){
-        for(let j = 0; j < naturedropdownContent[i].length; j++){
-            naturedropdownContent[i].children[j].innerHTML=easyTextLines[j];
+    for(let i = 1; i < 4; i++){
+        const naturedropdownContent = document.getElementById("nat"+i);
+        console.log(naturedropdownContent.children[0].innerHTML);
+        for(let j = 0; j < naturedropdownContent.length; j++){
+            naturedropdownContent.children[j].innerHTML=easyTextLines[j];
         }
     }
     

@@ -942,7 +942,7 @@ Sapphire to begin the Battle Entry.</textarea>
         <div class="inputPair">
           <label class="name" for="nat{{i}}">
             Nature</label>
-          <select name="naturedropdown" id="nat{{i}}">
+          <select name="Pokemon{{i}}Nature" id="nat{{i}}">
             {% for nature in naturelist %}
             <option value={{ loop.index - 1 }}>{{ nature }}</option>
             {% endfor %}

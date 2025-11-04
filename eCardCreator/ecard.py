@@ -87,27 +87,27 @@ def cardmaker():
     movelist=[]
     easychat=[]
 
-    with open("eCardCreator/data/Pokemon_EN.txt","r") as infile:
+    with open("eCardCreator/data/EN/Pokemon.txt","r") as infile:
         for line in infile:
             pokelist.append(line.split('=')[0])
 
-    with open("eCardCreator/data/TrainerClass.txt","r") as infile:
+    with open("eCardCreator/data/EN/TrainerClass.txt","r") as infile:
         for line in infile:
             classlist.append(line.strip())
 
-    with open("eCardCreator/data/Natures.txt","r") as infile:
+    with open("eCardCreator/data/EN/Natures.txt","r") as infile:
         for line in infile:
             naturelist.append(line.strip())
 
-    with open("eCardCreator/data/Items.txt","r") as infile:
+    with open("eCardCreator/data/EN/Items.txt","r") as infile:
         for line in infile:
             itemlist.append(line.split('=')[0])
 
-    with open("eCardCreator/data/Moves.txt","r") as infile:
+    with open("eCardCreator/data/EN/Moves.txt","r") as infile:
         for line in infile:
             movelist.append(line.split('=')[0])
 
-    with open("eCardCreator/data/EasyChat_EN.txt","r") as infile:
+    with open("eCardCreator/data/EN/EasyChat.txt","r") as infile:
         for line in infile:
             easychat.append(line.split('=')[0])
     
@@ -129,27 +129,27 @@ def get_region(region):
             return "IT"
 
 def get_easy(easy_chat,region):
-    with open(f"eCardCreator/data/EasyChat_{region}.txt","r") as infile:
+    with open(f"eCardCreator/data/{region}/EasyChat.txt","r") as infile:
         for line in infile:
             if easy_chat==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return '$FFFF'
 
-def get_pokemon(pokemon):
-    with open("eCardCreator/data/Pokemon_EN.txt","r") as infile:
+def get_pokemon(pokemon,region):
+    with open(f"eCardCreator/data/{region}/Pokemon.txt","r") as infile:
         for line in infile:
             if pokemon==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return 'SPECIES_NONE'
             
-def get_item(item):
+def get_item(item,region):
     with open("eCardCreator/data/Items.txt","r") as infile:
         for line in infile:
             if item==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return 'ITEM_NONE'
             
-def get_move(move):
+def get_move(move,region):
     with open("eCardCreator/data/Moves.txt","r") as infile:
         for line in infile:
             if move==line.split('=')[0]:
@@ -178,53 +178,56 @@ def check_empty(formval):
     return formval
 
 def print_request_form(in_form):
+    print(in_form)
+    region = get_region(in_form['LanguageSelect'])
+
     with open(f"eCardCreator/build/{in_form["TrainerName"]}.asm","w") as outfile:
         outfile.write('INCLUDE "eCardCreator/build/trainer_macros.asm"\n')
         outfile.write('    Battle_Trainer\n')
         outfile.write(f'    BT_Level {in_form["BTLevel"]}\n')
         outfile.write(f'    db {get_class(in_form["TrainerClass"])}\n')
         outfile.write(f'    BT_Floor {in_form["BTFloor"]}\n')
-        outfile.write(f'    Text_{get_region(in_form['LanguageSelect'])} "{in_form["TrainerName"]}"8\n')
+        outfile.write(f'    Text_{region} "{in_form["TrainerName"]}"8\n')
         outfile.write(f'    OT_ID 00000,00000\n')
         outfile.write('\n')
-        outfile.write(f'    Intro_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["intro1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["intro6"],get_region(in_form['LanguageSelect']))}\n')
-        outfile.write(f'    Win_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["win1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["win6"],get_region(in_form['LanguageSelect']))}\n')
-        outfile.write(f'    Loss_{get_region(in_form['LanguageSelect'])} {get_easy(in_form["lose1"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose2"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose3"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose4"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose5"],get_region(in_form['LanguageSelect']))},{get_easy(in_form["lose6"],get_region(in_form['LanguageSelect']))}\n')
+        outfile.write(f'    Intro_{region} {get_easy(in_form["intro1"],region)},{get_easy(in_form["intro2"],region)},{get_easy(in_form["intro3"],region)},{get_easy(in_form["intro4"],region)},{get_easy(in_form["intro5"],region)},{get_easy(in_form["intro6"],region)}\n')
+        outfile.write(f'    Win_{region} {get_easy(in_form["win1"],region)},{get_easy(in_form["win2"],region)},{get_easy(in_form["win3"],region)},{get_easy(in_form["win4"],region)},{get_easy(in_form["win5"],region)},{get_easy(in_form["win6"],region)}\n')
+        outfile.write(f'    Loss_{region} {get_easy(in_form["lose1"],region)},{get_easy(in_form["lose2"],region)},{get_easy(in_form["lose3"],region)},{get_easy(in_form["lose4"],region)},{get_easy(in_form["lose5"],region)},{get_easy(in_form["lose6"],region)}\n')
         outfile.write('\n')
-        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon1"])}\n')
-        outfile.write(f'    Holds {get_item(in_form["Pokemon1Item"])}\n')
-        outfile.write(f'    Moves {get_move(in_form["Pokemon1Move1"])}, {get_move(in_form["Pokemon1Move2"])}, {get_move(in_form["Pokemon1Move3"])}, {get_move(in_form["Pokemon1Move4"])}\n')
+        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon1"],region)}\n')
+        outfile.write(f'    Holds {get_item(in_form["Pokemon1Item"],region)}\n')
+        outfile.write(f'    Moves {get_move(in_form["Pokemon1Move1"],region)}, {get_move(in_form["Pokemon1Move2"],region)}, {get_move(in_form["Pokemon1Move3"],region)}, {get_move(in_form["Pokemon1Move4"],region)}\n')
         outfile.write(f'    Level {in_form["Pokemon1Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon1PP1'])},{check_empty(in_form['Pokemon1PP2'])},{check_empty(in_form['Pokemon1PP3'])},{check_empty(in_form['Pokemon1PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon1HPEV"])},{check_empty(in_form["Pokemon1AtkEV"])},{check_empty(in_form["Pokemon1DefEV"])},{check_empty(in_form["Pokemon1SpAtkEV"])},{check_empty(in_form["Pokemon1SpDefEV"])},{check_empty(in_form["Pokemon1SpdEV"])}\n')
         outfile.write(f'    OT_ID {in_form["Pokemon1TID"]},{in_form["Pokemon1SID"]}\n')
         outfile.write(f'    IVs {check_empty(in_form["Pokemon1HPIV"])},{check_empty(in_form["Pokemon1AtkIV"])},{check_empty(in_form["Pokemon1DefIV"])},{check_empty(in_form["Pokemon1SpAtkIV"])},{check_empty(in_form["Pokemon1SpDefIV"])},{check_empty(in_form["Pokemon1SpdIV"])}, {in_form["Pokemon1Nature"]}\n')
         outfile.write(f'    PV ${in_form["Pokemon1PID"]}\n')
-        outfile.write(f'    Text_{get_region(in_form['LanguageSelect'])} "{in_form["Pokemon1Nickname"]}"11\n')
+        outfile.write(f'    Text_{region} "{in_form["Pokemon1Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon1Friendship']}\n')
         outfile.write('\n')
-        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon2"])}\n')
-        outfile.write(f'    Holds {get_item(in_form["Pokemon2Item"])}\n')
-        outfile.write(f'    Moves {get_move(in_form["Pokemon2Move1"])}, {get_move(in_form["Pokemon2Move2"])}, {get_move(in_form["Pokemon2Move3"])}, {get_move(in_form["Pokemon2Move4"])}\n')
+        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon2"],region)}\n')
+        outfile.write(f'    Holds {get_item(in_form["Pokemon2Item"],region)}\n')
+        outfile.write(f'    Moves {get_move(in_form["Pokemon2Move1"],region)}, {get_move(in_form["Pokemon2Move2"],region)}, {get_move(in_form["Pokemon2Move3"],region)}, {get_move(in_form["Pokemon2Move4"],region)}\n')
         outfile.write(f'    Level {in_form["Pokemon2Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon2PP1'])},{check_empty(in_form['Pokemon2PP2'])},{check_empty(in_form['Pokemon2PP3'])},{check_empty(in_form['Pokemon2PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon2HPEV"])},{check_empty(in_form["Pokemon2AtkEV"])},{check_empty(in_form["Pokemon2DefEV"])},{check_empty(in_form["Pokemon2SpAtkEV"])},{check_empty(in_form["Pokemon2SpDefEV"])},{check_empty(in_form["Pokemon2SpdEV"])}\n')
         outfile.write(f'    OT_ID {in_form["Pokemon2TID"]},{in_form["Pokemon2SID"]}\n')
         outfile.write(f'    IVs {check_empty(in_form["Pokemon2HPIV"])},{check_empty(in_form["Pokemon2AtkIV"])},{check_empty(in_form["Pokemon2DefIV"])},{check_empty(in_form["Pokemon2SpAtkIV"])},{check_empty(in_form["Pokemon2SpDefIV"])},{check_empty(in_form["Pokemon2SpdIV"])}, {in_form["Pokemon2Nature"]}\n')
         outfile.write(f'    PV ${in_form["Pokemon2PID"]}\n')
-        outfile.write(f'    Text_{get_region(in_form['LanguageSelect'])} "{in_form["Pokemon2Nickname"]}"11\n')
+        outfile.write(f'    Text_{region} "{in_form["Pokemon2Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon2Friendship']}\n')
         outfile.write('\n')
-        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon3"])}\n')
-        outfile.write(f'    Holds {get_item(in_form["Pokemon3Item"])}\n')
-        outfile.write(f'    Moves {get_move(in_form["Pokemon3Move1"])}, {get_move(in_form["Pokemon3Move2"])}, {get_move(in_form["Pokemon3Move3"])}, {get_move(in_form["Pokemon3Move4"])}\n')
+        outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon3"],region)}\n')
+        outfile.write(f'    Holds {get_item(in_form["Pokemon3Item"],region)}\n')
+        outfile.write(f'    Moves {get_move(in_form["Pokemon3Move1"],region)}, {get_move(in_form["Pokemon3Move2"],region)}, {get_move(in_form["Pokemon3Move3"],region)}, {get_move(in_form["Pokemon3Move4"],region)}\n')
         outfile.write(f'    Level {in_form["Pokemon3Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon3PP1'])},{check_empty(in_form['Pokemon3PP2'])},{check_empty(in_form['Pokemon3PP3'])},{check_empty(in_form['Pokemon3PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon3HPEV"])},{check_empty(in_form["Pokemon3AtkEV"])},{check_empty(in_form["Pokemon3DefEV"])},{check_empty(in_form["Pokemon3SpAtkEV"])},{check_empty(in_form["Pokemon3SpDefEV"])},{check_empty(in_form["Pokemon3SpdEV"])}\n')
         outfile.write(f'    OT_ID {in_form["Pokemon3TID"]},{in_form["Pokemon3SID"]}\n')
         outfile.write(f'    IVs {check_empty(in_form["Pokemon3HPIV"])},{check_empty(in_form["Pokemon3AtkIV"])},{check_empty(in_form["Pokemon3DefIV"])},{check_empty(in_form["Pokemon3SpAtkIV"])},{check_empty(in_form["Pokemon3SpDefIV"])},{check_empty(in_form["Pokemon3SpdIV"])}, {in_form["Pokemon3Nature"]}\n')
         outfile.write(f'    PV ${in_form["Pokemon3PID"]}\n')
-        outfile.write(f'    Text_{get_region(in_form['LanguageSelect'])} "{in_form["Pokemon3Nickname"]}"11\n')
+        outfile.write(f'    Text_{region} "{in_form["Pokemon3Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon3Friendship']}\n')
         outfile.write('\n')
         outfile.write(f'    End_Trainer')
@@ -233,7 +236,7 @@ def print_request_form(in_form):
         outfile.write('INCLUDE "eCardCreator/build/card_macros.asm"\n')
         outfile.write(f'DEF CLASS EQUS   "{get_class(in_form["TrainerClass"]).lower()}"\n')
         outfile.write(f'DEF TRAINER EQUS "{in_form["TrainerName"]}"\n')
-        outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{get_region(in_form['LanguageSelect'])}.tx"\n')
+        outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{region}.tx"\n')
         outfile.write(f'DEF BOX1LINE1 EQUS "{in_form["sendText"].split("\r\n")[0]}\\n"\n')
         outfile.write(f'DEF BOX1LINE2 EQUS "{in_form["sendText"].split("\r\n")[1]}\\n"\n')
         outfile.write(f'DEF BOX1LINE3 EQUS "{in_form["sendText"].split("\r\n")[2]}\\n"\n')
