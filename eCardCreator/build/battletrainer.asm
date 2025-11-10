@@ -49,15 +49,15 @@ DoorSpriteData: ; 1781
 	db $04,$08,$01,$01,$01,$01,$01
 
 Instructions1: ; 178c
-	db BOX1LINE1
-	db BOX1LINE2
-	db BOX1LINE3
-	db BOX1LINE4
+	db "{BOX1LINE1}"
+	db "{BOX1LINE2}"
+	db "{BOX1LINE3}"
+	db "{BOX1LINE4}"
 
 Instructions2: ; 1808
-	db BOX2LINE1
-	db BOX2LINE2
-	db BOX2LINE3
+	db "{BOX2LINE1}"
+	db "{BOX2LINE2}"
+	db "{BOX2LINE3}"
 
 BattleEntryInProcess: ; 1872
 	db "Battle Entry in Process...\0"

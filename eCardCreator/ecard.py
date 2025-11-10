@@ -93,11 +93,11 @@ def cardmaker():
 
     with open("eCardCreator/data/EN/TrainerClass.txt","r") as infile:
         for line in infile:
-            classlist.append(line.strip())
+            classlist.append(line.split('=')[0])
 
     with open("eCardCreator/data/EN/Natures.txt","r") as infile:
         for line in infile:
-            naturelist.append(line.strip())
+            naturelist.append(line.split('=')[0])
 
     with open("eCardCreator/data/EN/Items.txt","r") as infile:
         for line in infile:
@@ -143,26 +143,44 @@ def get_pokemon(pokemon,region):
             return 'SPECIES_NONE'
             
 def get_item(item,region):
-    with open("eCardCreator/data/Items.txt","r") as infile:
+    with open(f"eCardCreator/data//{region}/Items.txt","r") as infile:
         for line in infile:
             if item==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return 'ITEM_NONE'
             
 def get_move(move,region):
-    with open("eCardCreator/data/Moves.txt","r") as infile:
+    with open(f"eCardCreator/data/{region}/Moves.txt","r") as infile:
         for line in infile:
             if move==line.split('=')[0]:
                 return line.split('=')[1].strip()
             return 'MOVE_NONE'
 
-def get_class(trainerclass):
-    with open("eCardCreator/data/TrainerClass.txt","r") as infile:
+def get_class(trainerclass,region):
+    with open(f"eCardCreator/data/{region}/TrainerClass.txt","r") as infile:
         for line in infile:
             if trainerclass==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return 'AROMA_LADY'
-            
+            return '$00'
+
+def get_class_string(trainerclass,region):
+    #if region=='EN':
+    #    return trainerclass
+    
+    #with open(f"eCardCreator/data/{region}/TrainerClass.txt","r") as infile:
+    #   for line in infile:
+    #        if trainerclass==line.split('=')[0]:
+    #            trainerclass=line.split('=')[1].strip()
+    #        break
+    print('HOHOHO')
+    print(f'{int(trainerclass):02X}')
+    with open("eCardCreator/data/EN/TrainerClass.txt","r") as infile:
+        for line in infile:
+            if f'{int(trainerclass):02X}'==line.split('=$')[1].strip():
+                return line.split('=')[0].strip()
+    
+    return 'aroma_lady'
+                      
 
 def get_color(hexcol):
     print(hexcol)
@@ -185,14 +203,14 @@ def print_request_form(in_form):
         outfile.write('INCLUDE "eCardCreator/build/trainer_macros.asm"\n')
         outfile.write('    Battle_Trainer\n')
         outfile.write(f'    BT_Level {in_form["BTLevel"]}\n')
-        outfile.write(f'    db {get_class(in_form["TrainerClass"])}\n')
+        outfile.write(f'    db {get_class(in_form["TrainerClass"],region)}\n')
         outfile.write(f'    BT_Floor {in_form["BTFloor"]}\n')
         outfile.write(f'    Text_{region} "{in_form["TrainerName"]}"8\n')
         outfile.write(f'    OT_ID 00000,00000\n')
         outfile.write('\n')
-        outfile.write(f'    Intro_{region} {get_easy(in_form["intro1"],region)},{get_easy(in_form["intro2"],region)},{get_easy(in_form["intro3"],region)},{get_easy(in_form["intro4"],region)},{get_easy(in_form["intro5"],region)},{get_easy(in_form["intro6"],region)}\n')
-        outfile.write(f'    Win_{region} {get_easy(in_form["win1"],region)},{get_easy(in_form["win2"],region)},{get_easy(in_form["win3"],region)},{get_easy(in_form["win4"],region)},{get_easy(in_form["win5"],region)},{get_easy(in_form["win6"],region)}\n')
-        outfile.write(f'    Loss_{region} {get_easy(in_form["lose1"],region)},{get_easy(in_form["lose2"],region)},{get_easy(in_form["lose3"],region)},{get_easy(in_form["lose4"],region)},{get_easy(in_form["lose5"],region)},{get_easy(in_form["lose6"],region)}\n')
+        outfile.write(f'    Intro_Text {get_easy(in_form["intro1"],region)},{get_easy(in_form["intro2"],region)},{get_easy(in_form["intro3"],region)},{get_easy(in_form["intro4"],region)},{get_easy(in_form["intro5"],region)},{get_easy(in_form["intro6"],region)}\n')
+        outfile.write(f'    Win_Text {get_easy(in_form["win1"],region)},{get_easy(in_form["win2"],region)},{get_easy(in_form["win3"],region)},{get_easy(in_form["win4"],region)},{get_easy(in_form["win5"],region)},{get_easy(in_form["win6"],region)}\n')
+        outfile.write(f'    Loss_Text {get_easy(in_form["lose1"],region)},{get_easy(in_form["lose2"],region)},{get_easy(in_form["lose3"],region)},{get_easy(in_form["lose4"],region)},{get_easy(in_form["lose5"],region)},{get_easy(in_form["lose6"],region)}\n')
         outfile.write('\n')
         outfile.write(f'    Pokemon {get_pokemon(in_form["Pokemon1"],region)}\n')
         outfile.write(f'    Holds {get_item(in_form["Pokemon1Item"],region)}\n')
@@ -234,9 +252,8 @@ def print_request_form(in_form):
 
     with open(f"eCardCreator/build/{in_form["TrainerName"]}-card.asm","w") as outfile:
         outfile.write('INCLUDE "eCardCreator/build/card_macros.asm"\n')
-        outfile.write(f'DEF CLASS EQUS   "{get_class(in_form["TrainerClass"]).lower()}"\n')
+        outfile.write(f'DEF CLASS EQUS   "{get_class_string(in_form["TrainerClass"],region).replace('(','').replace(')','').replace(' ','_').lower()}"\n')
         outfile.write(f'DEF TRAINER EQUS "{in_form["TrainerName"]}"\n')
-        outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{region}.tx"\n')
         outfile.write(f'DEF BOX1LINE1 EQUS "{in_form["sendText"].split("\r\n")[0]}\\n"\n')
         outfile.write(f'DEF BOX1LINE2 EQUS "{in_form["sendText"].split("\r\n")[1]}\\n"\n')
         outfile.write(f'DEF BOX1LINE3 EQUS "{in_form["sendText"].split("\r\n")[2]}\\n"\n')
@@ -244,6 +261,7 @@ def print_request_form(in_form):
         outfile.write(f'DEF BOX2LINE1 EQUS "{in_form["sendText2"].split("\r\n")[0]}\\n"\n')
         outfile.write(f'DEF BOX2LINE2 EQUS "{in_form["sendText2"].split("\r\n")[1]}\\n"\n')
         outfile.write(f'DEF BOX2LINE3 EQUS "{in_form["sendText2"].split("\r\n")[2]}\\0"\n')
+        outfile.write(f'INCLUDE "eCardCreator/build/output/battletrainer-{region}.tx"\n')
 
     with open(f"eCardCreator/build/sprites/battletrainer1.pal","w") as outfile:
         outfile.write('	RGB  0,  0,  0\n')

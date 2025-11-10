@@ -29,46 +29,19 @@ DEF Hill_Num EQUS "dd"
 DEF BT_Level EQUS "db"
 DEF Class EQUS "db"
 DEF BT_Floor EQUS "dw" ; the byte after it is 00, but apparently means something…
-MACRO Intro_EN
-	IF REGION == REGION_EN
+MACRO Intro_Text
 	dw \1, \2, \3, \4, \5, \6
-	ENDC
 	ENDM
-MACRO Win_EN
-	IF REGION == REGION_EN
+MACRO Win_Text
 	dw \1, \2, \3, \4, \5, \6
-	ENDC
 	ENDM
-MACRO Loss_EN
-	IF REGION == REGION_EN
+MACRO Loss_Text
 	dw \1, \2, \3, \4, \5, \6
-	ENDC
 	ENDM
-MACRO After_EN
-	IF REGION == REGION_EN
+MACRO After_Text
 	dw \1, \2, \3, \4, \5, \6
-	ENDC
 	ENDM
-MACRO Intro_JP
-	IF REGION == REGION_JP
-	dw \1, \2, \3, \4, \5, \6
-	ENDC
-	ENDM
-MACRO Win_JP
-	IF REGION == REGION_JP
-	dw \1, \2, \3, \4, \5, \6
-	ENDC
-	ENDM
-MACRO Loss_JP
-	IF REGION == REGION_JP
-	dw \1, \2, \3, \4, \5, \6
-	ENDC
-	ENDM
-MACRO After_JP
-	IF REGION == REGION_EN
-	dw \1, \2, \3, \4, \5, \6
-	ENDC
-	ENDM
+
 DEF Pokemon EQUS "dw"
 DEF Holds EQUS "dw"
 DEF Moves EQUS "dw"

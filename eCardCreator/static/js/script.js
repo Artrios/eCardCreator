@@ -512,7 +512,7 @@ function changeLanguage() {
 
     for(let i = 0; i < classdropdownContent.length; i++){
         for(let j = 0; j < classdropdownContent[i].length; j++){
-            classdropdownContent[i].children[j].innerHTML=easyTextLines[j];
+            classdropdownContent[i].children[j].innerHTML=easyTextLines[j].split('=')[0];
         }
     }
 
@@ -597,7 +597,7 @@ function changeLanguage() {
         const naturedropdownContent = document.getElementById("nat"+i);
         console.log(naturedropdownContent.children[0].innerHTML);
         for(let j = 0; j < naturedropdownContent.length; j++){
-            naturedropdownContent.children[j].innerHTML=easyTextLines[j];
+            naturedropdownContent.children[j].innerHTML=easyTextLines[j].split('=')[0];
         }
     }
     
