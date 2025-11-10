@@ -12,6 +12,7 @@
 <style>
   body {
     background-color: rgb(36, 36, 36);
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
   }
 
   input[type=text] {
@@ -261,6 +262,7 @@
     justify-content: left;
     padding: 5px;
     width: 90%;
+    height: 110%;
   }
 
   .dropdown-box .dropdown-content ul {
@@ -269,8 +271,10 @@
 
   .dropdown-box .dropdown-content ul li {
     font-size: 0.8rem;
-    padding: 2px 2px;
+    padding: 3px 5px;
     cursor: pointer;
+    margin-left: 5px;
+    margin-right: 5px;
   }
 
   .dropdown-box .dropdown-content ul li.hide {
@@ -279,11 +283,12 @@
 
   .dropdown-box .dropdown-content ul li:hover {
     background-color: rgb(59, 59, 59);
+    border-radius: 4px;
   }
 
   .dropdown-box .dropdown-content ul li.active {
-    background-color: rgb(213 245 245);
-    color: rgb(34 34 218);
+    background-color: rgb(59, 59, 59);
+    border-radius: 4px;
   }
 
   input[type=color] {
@@ -429,7 +434,6 @@
     border: none;
     width: 100%;
     text-align: left;
-    font-family: 'Times New Roman', Times, serif;
     font-size: 16;
     cursor: pointer;
   }
