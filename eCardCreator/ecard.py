@@ -133,35 +133,35 @@ def get_easy(easy_chat,region):
         for line in infile:
             if easy_chat==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return '$FFFF'
+    return '$FFFF'
 
 def get_pokemon(pokemon,region):
     with open(f"eCardCreator/data/{region}/Pokemon.txt","r") as infile:
         for line in infile:
             if pokemon==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return 'SPECIES_NONE'
+    return 'SPECIES_NONE'
             
 def get_item(item,region):
     with open(f"eCardCreator/data//{region}/Items.txt","r") as infile:
         for line in infile:
             if item==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return 'ITEM_NONE'
+    return 'ITEM_NONE'
             
 def get_move(move,region):
     with open(f"eCardCreator/data/{region}/Moves.txt","r") as infile:
         for line in infile:
             if move==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return 'MOVE_NONE'
+    return 'MOVE_NONE'
 
 def get_class(trainerclass,region):
     with open(f"eCardCreator/data/{region}/TrainerClass.txt","r") as infile:
         for line in infile:
             if trainerclass==line.split('=')[0]:
                 return line.split('=')[1].strip()
-            return '$00'
+    return '$00'
 
 def get_class_string(trainerclass,region):
     #if region=='EN':
@@ -180,7 +180,16 @@ def get_class_string(trainerclass,region):
                 return line.split('=')[0].strip()
     
     return 'aroma_lady'
-                      
+
+def get_nature(nature):
+    with open("eCardCreator/data/EN/Natures.txt","r") as infile:
+        i=0
+        for line in infile:
+            if int(nature)==i:
+                return line.split('=')[1].strip()
+            i=i+1
+    
+    return 'HARDY'                  
 
 def get_color(hexcol):
     print(hexcol)
@@ -198,6 +207,21 @@ def check_empty(formval):
 def print_request_form(in_form):
     print(in_form)
     region = get_region(in_form['LanguageSelect'])
+    
+    if('Pokemon1Shiny' in in_form):
+        PV1='SHINY_'+get_nature(in_form['Pokemon1Nature'])+'_'+in_form['Pokemon1Gender']
+    else:
+        PV1=get_nature(in_form['Pokemon1Nature'])+'_'+in_form['Pokemon1Gender']
+
+    if('Pokemon2Shiny' in in_form):
+        PV2='SHINY_'+get_nature(in_form['Pokemon2Nature'])+'_'+in_form['Pokemon2Gender']
+    else:
+        PV2=get_nature(in_form['Pokemon2Nature'])+'_'+in_form['Pokemon2Gender']
+
+    if('Pokemon3Shiny' in in_form):
+        PV3='SHINY_'+get_nature(in_form['Pokemon3Nature'])+'_'+in_form['Pokemon2Gender']
+    else:
+        PV3=get_nature(in_form['Pokemon3Nature'])+'_'+in_form['Pokemon2Gender']
 
     with open(f"eCardCreator/build/{in_form["TrainerName"]}.asm","w") as outfile:
         outfile.write('INCLUDE "eCardCreator/build/trainer_macros.asm"\n')
@@ -218,9 +242,9 @@ def print_request_form(in_form):
         outfile.write(f'    Level {in_form["Pokemon1Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon1PP1'])},{check_empty(in_form['Pokemon1PP2'])},{check_empty(in_form['Pokemon1PP3'])},{check_empty(in_form['Pokemon1PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon1HPEV"])},{check_empty(in_form["Pokemon1AtkEV"])},{check_empty(in_form["Pokemon1DefEV"])},{check_empty(in_form["Pokemon1SpAtkEV"])},{check_empty(in_form["Pokemon1SpDefEV"])},{check_empty(in_form["Pokemon1SpdEV"])}\n')
-        outfile.write(f'    OT_ID {in_form["Pokemon1TID"]},{in_form["Pokemon1SID"]}\n')
-        outfile.write(f'    IVs {check_empty(in_form["Pokemon1HPIV"])},{check_empty(in_form["Pokemon1AtkIV"])},{check_empty(in_form["Pokemon1DefIV"])},{check_empty(in_form["Pokemon1SpAtkIV"])},{check_empty(in_form["Pokemon1SpDefIV"])},{check_empty(in_form["Pokemon1SpdIV"])}, {in_form["Pokemon1Nature"]}\n')
-        outfile.write(f'    PV ${in_form["Pokemon1PID"]}\n')
+        outfile.write(f'    OT_ID 00000, 00000\n')
+        outfile.write(f'    IVs {check_empty(in_form["Pokemon1HPIV"])},{check_empty(in_form["Pokemon1AtkIV"])},{check_empty(in_form["Pokemon1DefIV"])},{check_empty(in_form["Pokemon1SpAtkIV"])},{check_empty(in_form["Pokemon1SpDefIV"])},{check_empty(in_form["Pokemon1SpdIV"])}, {in_form["Pokemon1Ability"]}\n')
+        outfile.write(f'    PV {PV1}\n')
         outfile.write(f'    Text_{region} "{in_form["Pokemon1Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon1Friendship']}\n')
         outfile.write('\n')
@@ -230,9 +254,9 @@ def print_request_form(in_form):
         outfile.write(f'    Level {in_form["Pokemon2Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon2PP1'])},{check_empty(in_form['Pokemon2PP2'])},{check_empty(in_form['Pokemon2PP3'])},{check_empty(in_form['Pokemon2PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon2HPEV"])},{check_empty(in_form["Pokemon2AtkEV"])},{check_empty(in_form["Pokemon2DefEV"])},{check_empty(in_form["Pokemon2SpAtkEV"])},{check_empty(in_form["Pokemon2SpDefEV"])},{check_empty(in_form["Pokemon2SpdEV"])}\n')
-        outfile.write(f'    OT_ID {in_form["Pokemon2TID"]},{in_form["Pokemon2SID"]}\n')
-        outfile.write(f'    IVs {check_empty(in_form["Pokemon2HPIV"])},{check_empty(in_form["Pokemon2AtkIV"])},{check_empty(in_form["Pokemon2DefIV"])},{check_empty(in_form["Pokemon2SpAtkIV"])},{check_empty(in_form["Pokemon2SpDefIV"])},{check_empty(in_form["Pokemon2SpdIV"])}, {in_form["Pokemon2Nature"]}\n')
-        outfile.write(f'    PV ${in_form["Pokemon2PID"]}\n')
+        outfile.write(f'    OT_ID 00000, 00000\n')
+        outfile.write(f'    IVs {check_empty(in_form["Pokemon2HPIV"])},{check_empty(in_form["Pokemon2AtkIV"])},{check_empty(in_form["Pokemon2DefIV"])},{check_empty(in_form["Pokemon2SpAtkIV"])},{check_empty(in_form["Pokemon2SpDefIV"])},{check_empty(in_form["Pokemon2SpdIV"])}, {in_form["Pokemon2Ability"]}\n')
+        outfile.write(f'    PV {PV2}\n')
         outfile.write(f'    Text_{region} "{in_form["Pokemon2Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon2Friendship']}\n')
         outfile.write('\n')
@@ -242,9 +266,9 @@ def print_request_form(in_form):
         outfile.write(f'    Level {in_form["Pokemon3Level"]}\n')
         outfile.write(f'    PP_Ups {check_empty(in_form['Pokemon3PP1'])},{check_empty(in_form['Pokemon3PP2'])},{check_empty(in_form['Pokemon3PP3'])},{check_empty(in_form['Pokemon3PP4'])}\n')
         outfile.write(f'    EVs {check_empty(in_form["Pokemon3HPEV"])},{check_empty(in_form["Pokemon3AtkEV"])},{check_empty(in_form["Pokemon3DefEV"])},{check_empty(in_form["Pokemon3SpAtkEV"])},{check_empty(in_form["Pokemon3SpDefEV"])},{check_empty(in_form["Pokemon3SpdEV"])}\n')
-        outfile.write(f'    OT_ID {in_form["Pokemon3TID"]},{in_form["Pokemon3SID"]}\n')
-        outfile.write(f'    IVs {check_empty(in_form["Pokemon3HPIV"])},{check_empty(in_form["Pokemon3AtkIV"])},{check_empty(in_form["Pokemon3DefIV"])},{check_empty(in_form["Pokemon3SpAtkIV"])},{check_empty(in_form["Pokemon3SpDefIV"])},{check_empty(in_form["Pokemon3SpdIV"])}, {in_form["Pokemon3Nature"]}\n')
-        outfile.write(f'    PV ${in_form["Pokemon3PID"]}\n')
+        outfile.write(f'    OT_ID 00000, 00000\n')
+        outfile.write(f'    IVs {check_empty(in_form["Pokemon3HPIV"])},{check_empty(in_form["Pokemon3AtkIV"])},{check_empty(in_form["Pokemon3DefIV"])},{check_empty(in_form["Pokemon3SpAtkIV"])},{check_empty(in_form["Pokemon3SpDefIV"])},{check_empty(in_form["Pokemon3SpdIV"])}, {in_form["Pokemon3Ability"]}\n')
+        outfile.write(f'    PV {PV3}\n')
         outfile.write(f'    Text_{region} "{in_form["Pokemon3Nickname"]}"11\n')
         outfile.write(f'    Friendship {in_form['Pokemon3Friendship']}\n')
         outfile.write('\n')

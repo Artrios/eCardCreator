@@ -897,20 +897,18 @@ Sapphire to begin the Battle Entry.</textarea>
             </div>
           </div>
         </div>
-        <div class="inputPair" style="width:22%">
-          <label class="name" for="Pokemon{{i}}PID" hidden>
-            PID</label>
-          <input type="number" id="Pokemon{{i}}PID" hidden name="Pokemon{{i}}PID" value="0" min="0" max="4294967295"/>
+        <div class="inputPair">
+          <label class="name" for="Pokemon{{i}}Level">
+            Lv.</label>
+          <input type="number" id="Pokemon{{i}}Level" name="Pokemon{{i}}Level" value="1" min="1" max="100" />
         </div>
-        <div class="inputPair" style="width:12%">
-          <label class="name" for="Pokemon{{i}}TID" hidden>
-            TID</label>
-          <input type="number" id="Pokemon{{i}}TID" hidden name="Pokemon{{i}}TID" value="0" min="0" max="65535"/>
-        </div>
-        <div class="inputPair" style="width:12%">
-          <label class="name" for="Pokemon{{i}}SID" hidden>
-            SID</label>
-          <input type="number" id="Pokemon{{i}}SID" hidden name="Pokemon{{i}}SID" value="0" min="0" max="65535"/>
+        <div class="inputPair">
+          <label class="name" for="Pokemon{{i}}Gender">
+            Gender</label>
+          <select name="Pokemon{{i}}Gender" id="Pokemon{{i}}Gender">
+            <option value="MALE">MALE</option>
+            <option value="FEMALE">FEMALE</option>
+          </select>
         </div>
       </div>
       <div class=pokemondetailsline>
@@ -920,26 +918,21 @@ Sapphire to begin the Battle Entry.</textarea>
           <input type="text" id="Pokemon{{i}}Nickname" name="Pokemon{{i}}Nickname" class="PokemonNickname" maxlength="11" style="width:120px;"/>
         </div>
         <div class="inputPair">
-          <label class="name" for="Pokemon{{i}}Level">
-            Lv.</label>
-          <input type="number" id="Pokemon{{i}}Level" name="Pokemon{{i}}Level" value="1" min="1" max="100" />
+          <label class="name" for="Pokemon{{i}}Friendship">
+            Friendship</label>
+          <input type="number" id="Pokemon{{i}}Friendship" name="Pokemon{{i}}Friendship" value="0" min="0" max="255" />
         </div>
         <div class="inputPair">
           <label class="name" for="Pokemon{{i}}Shiny">
             Shiny</label>
           <input type="checkbox" id="Pokemon{{i}}Shiny" name="Pokemon{{i}}Shiny" />
         </div>
-        <div class="inputPair">
-          <label class="name" for="Pokemon{{i}}Friendship">
-            Friendship</label>
-          <input type="number" id="Pokemon{{i}}Friendship" name="Pokemon{{i}}Friendship" value="0" min="0" max="255" />
-        </div>
       </div>
       <div class=pokemondetailsline>
         <div class="inputPair">
-          <label class="name" for="Ability{{i}}">
+          <label class="name" for="Pokemon{{i}}Ability">
             Ability</label>
-          <select name="Pokemon{{i}}Ability" id="Ability{{i}}" disabled=true>
+          <select name="Pokemon{{i}}Ability" id="Ability{{i}}">
             <option value="0">------------</option>
           </select>
         </div>

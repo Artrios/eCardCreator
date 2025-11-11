@@ -51,12 +51,12 @@ function pokemonchoicechange(val,outselect){
     }
 
     abilitychoice.innerHTML = str;
-    if(count<=1){
-        abilitychoice.disabled=true;
-    }
-    else{
-        abilitychoice.disabled=false;
-    }
+    //if(count<=1){
+    //    abilitychoice.disabled=true;
+    //}
+    //else{
+    //    abilitychoice.disabled=false;
+    //}
 }
 
 function openDropdown(i) {
