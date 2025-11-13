@@ -13,9 +13,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port your Flask app runs on (default is 5000)
-EXPOSE 5000
+EXPOSE 8080
 
 # Command to run the Flask application using Gunicorn for production
 # For development, you can use `flask run --host=0.0.0.0`
 #CMD ["ls"]
-CMD ["flask", "--app", "eCardCreator", "run", "--host=0.0.0.0"]
+CMD ["waitress-serve", "--call", "eCardCreator:create_app"]
