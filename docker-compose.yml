@@ -1,0 +1,5 @@
+services:
+  ecardcreator:
+    build: .
+    ports:
+      - "5000:8080"
