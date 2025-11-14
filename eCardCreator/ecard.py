@@ -16,12 +16,12 @@ from eCardCreator.db import get_db
 
 bp = Blueprint('main', __name__, url_prefix='/')
 
-@bp.route('/', methods=('GET', 'POST'))
+@bp.route('/ereadercreator', methods=('GET', 'POST'))
 def mainpage():
 
     return render_template('ecard/main.html')
 
-@bp.route('/battle_trainer', methods=('GET', 'POST'))
+@bp.route('/ereadercreator/battle_trainer', methods=('GET', 'POST'))
 def cardmaker():
     if request.method == 'POST':
         print_request_form(request.form)
