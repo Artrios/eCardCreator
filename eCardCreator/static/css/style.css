@@ -194,7 +194,7 @@ textarea {
 	bottom: -2px;
 	height: 2px;
 	width: 100%;
-	background: linear-gradient(90deg, #00bfff, #0088cc);
+	background: linear-gradient(90deg, #69daff, #0088cc);
 	transform: scaleX(0);
 	transform-origin: left;
 	transition: transform 0.3s ease-in-out;
@@ -222,4 +222,9 @@ textarea {
 
 .form-upload {
 	display: inline;
+}
+
+a {
+  color: #00bfff;
+  text-decoration: none;
 }
