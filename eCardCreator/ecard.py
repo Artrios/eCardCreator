@@ -227,7 +227,7 @@ def print_request_form(in_form):
         outfile.write('INCLUDE "eCardCreator/build/trainer_macros.asm"\n')
         outfile.write('    Battle_Trainer\n')
         outfile.write(f'    BT_Level {in_form["BTLevel"]}\n')
-        outfile.write(f'    db {get_class(in_form["TrainerClass"],region)}\n')
+        outfile.write(f'    db {in_form["TrainerClass"]}\n')
         outfile.write(f'    BT_Floor {in_form["BTFloor"]}\n')
         outfile.write(f'    Text_{region} "{in_form["TrainerName"]}"8\n')
         outfile.write(f'    OT_ID 00000,00000\n')
