@@ -170,42 +170,36 @@
     }
 }
 
-div.crt::after {
+.crt::after {
     content: " ";
     display: block;
-    position: absolute;
-    top: 60px;
-    left: 60px;
-    bottom: 0px;
-    right: 0px;
-    width: 240px;
-    height: 160px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background: rgba(18, 16, 16, 0.1);
     opacity: 0;
-    z-index: 3;
+    z-index: 2;
     pointer-events: none;
     animation: flicker 0.15s infinite;
 }
 
-div.crt::before {
+.crt::before {
     content: " ";
     display: block;
-    position: absolute;
-    top: 60px;
-    left: 60px;
-    bottom: 0px;
-    right: 0px;
-    width: 240px;
-    height: 160px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
     background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-    z-index: 3;
+    z-index: 2;
     background-size: 100% 2px, 3px 100%;
     pointer-events: none;
 }
 
-div.crt {
-    width: 240px;
-    position: relative;
-    justify-content: center;
-    padding: 60px 60px;
+.crt {
+    background-color: black;
+    animation: textShadow 1.6s infinite;
 }
