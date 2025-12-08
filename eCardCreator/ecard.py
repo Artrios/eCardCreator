@@ -113,6 +113,99 @@ def cardmaker():
     
     return render_template('ecard/battle-e.html', pokelist=pokelist, classlist=classlist, naturelist=naturelist, itemlist=itemlist, movelist=movelist, easychat=easychat)
 
+@bp.route('/ecardcreator/trainer_hill', methods=('GET', 'POST'))
+def cardmaker_th():
+    if request.method == 'POST':
+        print_request_form(request.form)
+        print(request.form)
+        
+        #subprocess.run(["python3", "eCardCreator/build/scripts/regionalize.py", f"eCardCreator/build/{request.form['TrainerName']}.asm", f"eCardCreator/build/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.tx", get_region(request.form['LanguageSelect']), get_region(request.form['LanguageSelect'])])
+        
+        print(get_region(request.form['LanguageSelect']))
+        eCardCreator.regionalize.regionalize(f"eCardCreator/build/{request.form['TrainerName']}.asm",f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.tx",get_region(request.form['LanguageSelect']),get_region(request.form['LanguageSelect']))
+        subprocess.run(["eCardCreator/bin/rgbds/rgbasm", "-M", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.o.d", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.o", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.tx"])
+        subprocess.run(["eCardCreator/bin/rgbds/rgblink", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.o"])
+        #subprocess.run(["python3", "eCardCreator/build/scripts/stripgbc.py", f"eCardCreator/build/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.bin"])
+        #subprocess.run(["python3", "eCardCreator/build/scripts/checksum.py", f"eCardCreator/build/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.bin", f"eCardCreator/build/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.mev"])
+        #subprocess.run(["python3", "eCardCreator/build/scripts/ereadertext.py", f"eCardCreator/build/{request.form['TrainerName']}-card.asm",f"eCardCreator/build/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.tx", get_region(request.form['LanguageSelect'])])
+        eCardCreator.stripgbc.stripgbc(f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.bin")
+        eCardCreator.checksum.checksum(f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.bin", f"eCardCreator/build/output/{request.form['TrainerName']}-{get_region(request.form['LanguageSelect'])}.mev")
+        eCardCreator.ereadertext.ereadertext(f"eCardCreator/build/{request.form['TrainerName']}-card.asm", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.tx", get_region(request.form['LanguageSelect']))
+
+        #subprocess.run(["python3", "eCardCreator/build/scripts/regionalize.py", "eCardCreator/build/prologue.asm", "eCardCreator/build/prologue-EN.tx", "EN", "EN"])
+        eCardCreator.regionalize.regionalize("eCardCreator/build/prologue.asm",f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.tx",get_region(request.form['LanguageSelect']),get_region(request.form['LanguageSelect']))
+        subprocess.run(["eCardCreator/bin/rgbds/rgbasm", "-M", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.o.d", "-o", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.o", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.tx"])
+        subprocess.run(["eCardCreator/bin/rgbds/rgblink", "-o", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.o"])
+        #subprocess.run(["python3", "eCardCreator/build/scripts/stripgbc.py", "eCardCreator/build/prologue-EN.gbc", "eCardCreator/build/prologue-EN.bin"])
+        eCardCreator.stripgbc.stripgbc(f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/prologue-{get_region(request.form['LanguageSelect'])}.bin")
+
+        #subprocess.run(["python3", "eCardCreator/build/scripts/ereadertext.py", "eCardCreator/build/battletrainer.asm", "eCardCreator/build/battletrainer-EN.tx", get_region(request.form['LanguageSelect'])])
+        eCardCreator.ereadertext.ereadertext("eCardCreator/build/battletrainer.asm", f"eCardCreator/build/output/battletrainer-{get_region(request.form['LanguageSelect'])}.tx", get_region(request.form['LanguageSelect']))
+        subprocess.run(["eCardCreator/bin/rgbds/rgbasm", "-I", "eCardCreator/build", "-M", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.o.d", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.tx"])
+        subprocess.run(["eCardCreator/bin/rgbds/rgblink", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.o"])
+        #subprocess.run(["python3", "eCardCreator/build/scripts/stripgbc.py", f"eCardCreator/build/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.z80"])
+        eCardCreator.stripgbc.stripgbc(f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.gbc", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.z80")
+        subprocess.run(["eCardCreator/bin/nedc/nevpk", "-c", "-i", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.z80", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.vpk"])
+        subprocess.run(["eCardCreator/bin/nedc/nedcmake", "-i", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}.vpk", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}", "-type", "1", "-region", "1"])
+        subprocess.run(["eCardCreator/bin/nedc/raw2bmp", "-i", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw", "-o", f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01", "-dpi", "600"])
+
+        if request.form['type'] == "raw":
+            try:
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw")
+            except Exception as e:
+                return str(e)
+        elif request.form['type'] == "bmp":
+            try:
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp", as_attachment=True)
+            except Exception as e:
+                return str(e)
+        else:
+            try:
+                zip_file_path = f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.zip"
+                with zipfile.ZipFile(zip_file_path, 'w') as myzip:
+                    myzip.write(f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw", arcname=f"{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.raw")
+                    myzip.write(f"eCardCreator/build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp", arcname=f"{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.bmp")
+                    myzip.write(f"eCardCreator/build/{request.form['TrainerName']}.asm", arcname=f"{request.form['TrainerName']}.asm")
+                    myzip.write(f"eCardCreator/build/{request.form['TrainerName']}-card.asm", arcname=f"{request.form['TrainerName']}-card.asm")
+                return send_file(f"build/output/{request.form['TrainerName']}-card-{get_region(request.form['LanguageSelect'])}-01.zip")
+            except Exception as e:
+                return str(e)
+
+
+    pokelist=[]
+    classlist=[]
+    naturelist=[]
+    itemlist=[]
+    movelist=[]
+    easychat=[]
+
+    with open("eCardCreator/data/EN/Pokemon.txt","r") as infile:
+        for line in infile:
+            pokelist.append(line.split('=')[0])
+
+    with open("eCardCreator/data/EN/TrainerClass.txt","r") as infile:
+        for line in infile:
+            classlist.append(line.split('=')[0])
+
+    with open("eCardCreator/data/EN/Natures.txt","r") as infile:
+        for line in infile:
+            naturelist.append(line.split('=')[0])
+
+    with open("eCardCreator/data/EN/Items.txt","r") as infile:
+        for line in infile:
+            itemlist.append(line.split('=')[0])
+
+    with open("eCardCreator/data/EN/Moves.txt","r") as infile:
+        for line in infile:
+            movelist.append(line.split('=')[0])
+
+    with open("eCardCreator/data/EN/EasyChat.txt","r") as infile:
+        for line in infile:
+            easychat.append(line.split('=')[0])
+    
+    return render_template('ecard/trainer-hill.html', pokelist=pokelist, classlist=classlist, naturelist=naturelist, itemlist=itemlist, movelist=movelist, easychat=easychat)
+
+
 def get_region(region):
     match region:
         case "0":
