@@ -59,25 +59,6 @@ function pokemonchoicechange(val,outselect){
     //}
 }
 
-function getBase64Image(img) {
-    // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to
-    // guess the original format, but be aware the using "image/jpg"
-    // will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-}
-
 function openDropdown(i) {
     const dropdown = document.querySelectorAll(".dropdown-box");
     const searchInput = document.querySelectorAll(".search-input input");
@@ -248,6 +229,12 @@ window.addEventListener("load", () => {
     console.log('start')
     var x = 0;
     var y = 0;
+    T1_x = 0;
+    T1_y = 69;
+    T2_x = 16;
+    T2_y = 69;
+    T1_behind = false;
+    T2_behind = false;
 
     window.addEventListener("click", windowClickEvent => {
       for(let i = 0; i < dropdown.length; i++){
@@ -315,8 +302,19 @@ window.addEventListener("load", () => {
     mapImage.onload = () => {
         ctx.drawImage(mapImage, 0, 0, 240, 320); // Draw the image at position (0,0)
     };
-    //canvas1.width=240;
-    //canvas1.height=320;
+    
+    canvasTrainers = document.getElementById('map-canvas2');
+    mapImageT1 = new Image();
+    mapImageT1.src = '/data/images/T1_down.png'
+    ctxTrainers = canvasTrainers.getContext('2d');
+    mapImageT1.onload = () => {
+        ctxTrainers.drawImage(mapImageT1, T1_x, T1_y); // Draw the image at position (0,0)
+    };
+    mapImageT2 = new Image();
+    mapImageT2.src = '/data/images/T2_down.png'
+    mapImageT2.onload = () => {
+        ctxTrainers.drawImage(mapImageT2, T2_x, T2_y); // Draw the image at position (0,0)
+    };
 
     canvasTileSet = document.getElementById('tiles-canvas');
     mapImage2 = new Image();
@@ -355,62 +353,83 @@ window.addEventListener("load", () => {
         ctx2.drawImage(spriteImage1, x, y);
     });
 
-    /*canvas1.addEventListener("click", function(event) {
-        const rect = canvas1.getBoundingClientRect();
-        const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
 
-        x2 = event.clientX - rect.left;
-        y2 = event.clientY - rect.top;
-        x2 = x2 - (x2 % 16);
-        y2 = y2 - (y2 % 16);
-        
-
-
-        ctx.putImageData(ctx3.getImageData(x+1, y+1, 16, 16), x2, y2, 0, 0, 16, 16);
-    });*/
 
     let isDragging = false;
+    let dragT1 = false;
+    let dragT2 = false;
 
-    canvas1.addEventListener('mousedown', (event) => {
+    canvasTrainers.addEventListener('mousedown', (event) => {
         switch (event.button) {
             case 0:
-                isDragging = true;
+                
 
                 const rect = canvas1.getBoundingClientRect();
                 const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
 
                 x2 = event.clientX - rect.left;
                 y2 = event.clientY - rect.top;
-                x2 = x2 - (x2 % 16);
-                y2 = y2 - (y2 % 16);
 
-                if(y2>=80){
-                    ctx.putImageData(ctx3.getImageData(x+1, y+1, 16, 16), x2, y2, 0, 0, 16, 16);
+
+                if(x2>=T1_x && x2<=T1_x+16 && y2>=T1_y && y2<=T1_y+32 && dragT2==false){
+                    dragT1 = true;
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                    break;
+                }
+                else if (x2>=T2_x && x2<=T2_x+16 && y2>=T2_y && y2<=T2_y+32 && dragT1==false) {
+                    dragT2 = true;
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                    break;
+                } else {
+                    x2 = x2 - (x2 % 16);
+                    y2 = y2 - (y2 % 16);
+
+                    
+
+                    if(y2>=80){
+                        ctx.putImageData(ctx3.getImageData(x+1, y+1, 16, 16), x2, y2, 0, 0, 16, 16);
+                    }
+
+                    isDragging = true;
+                    document.addEventListener('mousemove', onMouseMove);
+                    document.addEventListener('mouseup', onMouseUp);
+                    break;
                 }
 
-                document.addEventListener('mousemove', onMouseMove);
-                document.addEventListener('mouseup', onMouseUp);
-                break;
             case 2:
                 const rect2 = canvas1.getBoundingClientRect();
                 x2 = event.clientX - rect2.left;
                 y2 = event.clientY - rect2.top;
                 x2 = x2 - (x2 % 16);
                 y2 = y2 - (y2 % 16);
+                same=0;
                 const imageData2 = ctx.getImageData(x2, y2, 16, 16);
                 console.log("searching");
 
                 for(i=0;i<128;i=i+16){
                     console.log(i);
                     for(j=0;j<512;j=j+16){
-                        console.log(j);
-                        if(getBase64Image(imageData2)==getBase64Image(ctx3.getImageData(i,j,16,16))){
+                        imageData3 = ctx3.getImageData(i,j,16,16);
+                        same=0;
+                        for(k=0;k<(16*16*4);k++){
+                            if(imageData2.data[k]!=imageData3.data[k]){
+                                same=1;
+                                break;
+                            }
+                        }
+                        if(same==0){
                             console.log("found");
                             ctx2.clearRect(0, 0, 128, 512);
                             x=i-1;
                             y=j-1;
                             ctx2.drawImage(spriteImage1, x, y);
+                            break;
                         }
+                    }
+                    if(same==0){
+                        break;
                     }
                 }
 
@@ -422,23 +441,101 @@ window.addEventListener("load", () => {
     });
 
     function onMouseMove(event) {
-        if (!isDragging) return;
+        if (isDragging){
 
-        const rect = canvas1.getBoundingClientRect();
-        const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
+            const rect = canvas1.getBoundingClientRect();
+            const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
 
-        x2 = event.clientX - rect.left;
-        y2 = event.clientY - rect.top;
-        x2 = x2 - (x2 % 16);
-        y2 = y2 - (y2 % 16);
+            x2 = event.clientX - rect.left;
+            y2 = event.clientY - rect.top;
+            x2 = x2 - (x2 % 16);
+            y2 = y2 - (y2 % 16);
 
-        if(y2>=80){
-            ctx.putImageData(ctx3.getImageData(x+1, y+1, 16, 16), x2, y2, 0, 0, 16, 16);
+            if(y2>=80){
+                ctx.putImageData(ctx3.getImageData(x+1, y+1, 16, 16), x2, y2, 0, 0, 16, 16);
+            }
         }
+        if (dragT1){
+            console.log('dragT1');
+            const rect = canvas1.getBoundingClientRect();
+            const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
+
+            x2 = event.clientX - rect.left;
+            y2 = event.clientY - rect.top;
+            x2 = x2 - (x2 % 16);
+            y2 = y2 - (y2 % 16) + 5;
+
+            if(y2>=64 && y2<=304 && x2>=0 && x2<=224){
+                if((x2==T2_x && y2==T2_y)==false && (x2!=T1_x || y2!=T1_y)){
+                    ctxTrainers.clearRect(T1_x, T1_y, 16, 32);
+                    ctxTrainers.drawImage(mapImageT1, x2, y2);
+                    
+                    if(x2==T2_x && y2==T2_y-16){
+                        T1_behind=true;
+                        ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+                    }
+                    else if(T1_behind){
+                        T1_behind=false;
+                        ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+                    }
+                    
+                    if(x2==T2_x && y2==T2_y+16){
+                        T2_behind=true;
+                    }
+                    else if(T2_behind){
+                        T2_behind=false;
+                        ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+                    }
+                    T1_x=x2;
+                    T1_y=y2;
+                }
+            }
+
+        }
+        if (dragT2){
+            console.log('dragT2');
+            const rect = canvas1.getBoundingClientRect();
+            const imageData = ctx.getImageData(0, 0, canvas1.width, canvas1.height);
+
+            x2 = event.clientX - rect.left;
+            y2 = event.clientY - rect.top;
+            x2 = x2 - (x2 % 16);
+            y2 = y2 - (y2 % 16) + 5;
+
+            if(y2>=64 && y2<=304 && x2>=0 && x2<=224){
+                if((x2==T1_x && y2==T1_y)==false && (x2!=T2_x || y2!=T2_y)){
+                    ctxTrainers.clearRect(T2_x, T2_y, 16, 32);
+                    ctxTrainers.drawImage(mapImageT2, x2, y2);
+                    
+                    if(x2==T1_x && y2==T1_y-16){
+                        T2_behind=true;
+                        ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+                    }
+                    else if(T2_behind){
+                        T2_behind=false;
+                        ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+                    }
+                    if(x2==T1_x && y2==T1_y+16){
+                        T1_behind=true;
+                    }
+                    else if(T1_behind){
+                        T1_behind=false;
+                        ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+                    }
+                    T2_x=x2;
+                    T2_y=y2;
+                }
+            }
+
+        }
+
+        return;
     }
 
     function onMouseUp() {
         isDragging = false;
+        dragT1 = false;
+        dragT2 = false;
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
     }
@@ -607,4 +704,30 @@ function changeLanguage() {
         }
     }
     
+};
+
+function changeDirection(input) {
+  
+    if(input.includes('T1')){
+        mapImageT1.src="/data/images/"+input+".png";
+        ctxTrainers.clearRect(T1_x, T1_y, 16, 32);
+        if(T2_behind){
+            ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+        }
+        ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+        if(T1_behind){
+            ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+        }
+    }
+    else{
+        mapImageT2.src="/data/images/"+input+".png";
+        ctxTrainers.clearRect(T2_x, T2_y, 16, 32);
+        if(T1_behind){
+            ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+        }
+        ctxTrainers.drawImage(mapImageT2, T2_x, T2_y);
+        if(!T1_behind){
+            ctxTrainers.drawImage(mapImageT1, T1_x, T1_y);
+        }
+    }
 };

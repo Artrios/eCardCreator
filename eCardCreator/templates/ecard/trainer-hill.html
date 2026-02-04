@@ -73,7 +73,7 @@
     margin-bottom: 10px;
     padding-left: 10px;
   }
-  
+
   form {
     display: flex;
     align-items: flex-start;
@@ -292,50 +292,48 @@
     box-shadow: 0 0 0 1pt rgb(63, 63, 63);
     outline-color: transparent;
   }
+
   input[type=color]::-webkit-color-swatch {
     border-radius: 3px;
     border: none;
   }
+
   input[type=color]::-moz-color-swatch {
     border-radius: 3px;
     border: none;
   }
 
-  #sendText
-  {
-      height:48px;
-      width:240px;
-      font-size: 11px;
-      line-height: 1.0;
-      padding: 0px 0px 0px 8px;
-      letter-spacing: 0px;
-      word-spacing: 0px;
-      background-color:black;
-      color:white;
-      border: none;
-      resize: none;
-      position: relative;
-      top: -224px;
+  #sendText {
+    height: 48px;
+    width: 240px;
+    font-size: 11px;
+    line-height: 1.0;
+    padding: 0px 0px 0px 8px;
+    letter-spacing: 0px;
+    word-spacing: 0px;
+    background-color: black;
+    color: white;
+    border: none;
+    resize: none;
+    position: relative;
+    top: -224px;
   }
 
-  #ev-field
-  {
-    width:45px;
-    height:20px;
+  #ev-field {
+    width: 45px;
+    height: 20px;
     margin-left: 5px;
   }
 
-  #pp-field
-  {
-    height:18px;
+  #pp-field {
+    height: 18px;
     margin-right: 10px;
     margin-top: 5px;
   }
 
-  #iv-field
-  {
-    width:45px;
-    height:20px;
+  #iv-field {
+    width: 45px;
+    height: 20px;
     margin-left: 5px;
   }
 
@@ -427,10 +425,14 @@
 
 
   /* Change color of dropdown links on hover */
-  .dropdown-download a:hover {background-color: #ddd}
+  .dropdown-download a:hover {
+    background-color: #ddd
+  }
 
   /* Change color of dropdown links on hover */
-  .dropdown-download button:hover {background-color: #ddd}
+  .dropdown-download button:hover {
+    background-color: #ddd
+  }
 
   /* Show the dropdown menu on hover */
   .dropdown2:hover .dropdown-download {
@@ -438,7 +440,7 @@
   }
 
   /* Change the background color of the dropdown button when the dropdown content is shown */
-  .dropdown2:hover .btn  {
+  .dropdown2:hover .btn {
     background-color: rgb(3, 102, 69);
   }
 
@@ -446,32 +448,22 @@
     flex-basis: 100%;
     height: 0;
   }
-
 </style>
 
 
- <ul class="navbar">
-  <li><a href="/"><h1 style="font-size:30;">Battle-e</h1></a></li>
+<ul class="navbar">
+  <li><a href="/">
+      <h1 style="font-size:30;">Battle-e</h1>
+    </a></li>
   <li><a href="battle_trainer">Battle Trainer</a></li>
   <li><a href="trainer_tower">Trainer Tower</a></li>
   <li><a class="active" href="trainer_hill">Trainer Hill</a></li>
-</ul> 
+</ul>
 
 
 <form method="post">
-    <div class="trainerdetails">
-      <div class="trainerdetails1" style="margin-bottom: 25px;">
-      <div class="inputPair">
-        <label class="name" for="version-field">
-          Version</label>
-        <select name="VersionSelect" class="VersionSelect" id="version-field">
-          <option value=0>Ruby</option>
-          <option value=1>Sapphire</option>
-          <option value=2>FireRed</option>
-          <option value=3>LeafGreen</option>
-          <option value=4>Emerald</option>
-        </select>
-      </div>
+  <div class="trainerdetails">
+    <div class="trainerdetails1" style="margin-bottom: 25px;">
       <div class="inputPair">
         <label class="LanguageClass" for="language-field">
           Language</label>
@@ -911,11 +903,38 @@
         </div>
       </div>
     </div>
-      <div class="tilemap">
-         <canvas id="map-canvas" width="240" height="320" style="position: relative; left: 0; top: 0; z-index: 0; width: 240; height: 320;"></canvas>
-         <canvas id="tiles-canvas" width="128" height="512" style="position: relative; left: 0; top: 0; z-index: 0;"></canvas>
-         <canvas id="layer2-canvas" width="128" height="512" style="background-color: transparent; position:relative; top:0px; left:-133px; z-index: 10;"></canvas>
-      </div>
+    <div class="tilemap">
+      <div class="inputPair">
+        <canvas id="map-canvas" width="240" height="320" oncontextmenu="return false;"
+          style="position: relative; left: 0; top: 0; z-index: 0; width: 240; height: 320;"></canvas>
+        <canvas id="map-canvas2" width="240" height="320" oncontextmenu="return false;"
+          style="position: relative; left: 0; top: -325; z-index: 1; width: 240; height: 320;"></canvas>
+        <div class="inputPair" style="position: relative; top: -315;">
+          <label class="Trainer1">
+            Trainer 1</label>
+          <div class="pokemondetailsline">
+            <img src="/data/images/T1_down.png" width="16" height="32" onclick="changeDirection('T1_down')">
+            <img src="/data/images/T1_left.png" width="16" height="32" onclick="changeDirection('T1_left')">
+            <img src="/data/images/T1_up.png" width="16" height="32" onclick="changeDirection('T1_up')">
+            <img src="/data/images/T1_right.png" width="16" height="32" onclick="changeDirection('T1_right')">
+            <input type="number" value="0" min="0" max="16" />
+          </div>
+          <label class="Trainer2">
+            Trainer 2</label>
+          <div class="pokemondetailsline">
+            <img src="/data/images/T2_down.png" width="16" height="32" onclick="changeDirection('T2_down')">
+            <img src="/data/images/T2_left.png" width="16" height="32" onclick="changeDirection('T2_left')">
+            <img src="/data/images/T2_up.png" width="16" height="32" onclick="changeDirection('T2_up')">
+            <img src="/data/images/T2_right.png" width="16" height="32" onclick="changeDirection('T2_right')">
+            <input type="number" value="0" min="0" max="16" />
+          </div>
+        </div>
+        </div>
+        <canvas id="tiles-canvas" width="128" height="512"
+          style="position: relative; left: 0; top: 0; z-index: 0; width: 128; height: 512;"></canvas>
+        <canvas id="layer2-canvas" width="128" height="512"
+          style="background-color: transparent; position:relative; top:0px; left:-133px; z-index: 10; width: 128; height: 512;"></canvas>
+      
     </div>
   </div>
   <div class=pokemon>
@@ -959,7 +978,8 @@
         <div class="inputPair">
           <label class="name" for="Pokemon{{i}}Nickname">
             Nickname</label>
-          <input type="text" id="Pokemon{{i}}Nickname" name="Pokemon{{i}}Nickname" class="PokemonNickname" maxlength="11" style="width:120px;"/>
+          <input type="text" id="Pokemon{{i}}Nickname" name="Pokemon{{i}}Nickname" class="PokemonNickname"
+            maxlength="11" style="width:120px;" />
         </div>
         <div class="inputPair">
           <label class="name" for="Pokemon{{i}}Friendship">
@@ -1012,7 +1032,8 @@
       <div class=pokemondetailsline>
         <label class="name" for="ev-field{{i}}" style="width:10px; margin-right: 0px;">
           EVs</label>
-        <input type="number" id="ev-field{{i}}" name="Pokemon{{i}}HPEV" placeholder="HP" min="0" max="255" style="width:45px; height:20px;" />
+        <input type="number" id="ev-field{{i}}" name="Pokemon{{i}}HPEV" placeholder="HP" min="0" max="255"
+          style="width:45px; height:20px;" />
         <input type="number" id="ev-field" name="Pokemon{{i}}AtkEV" placeholder="Atk" min="0" max="255" />
         <input type="number" id="ev-field" name="Pokemon{{i}}DefEV" placeholder="Def" min="0" max="255" />
         <input type="number" id="ev-field" name="Pokemon{{i}}SpAtkEV" placeholder="S.Atk" min="0" max="255" />
@@ -1022,7 +1043,8 @@
       <div class=pokemondetailsline>
         <label class="name" for="iv-field{{i}}" width="20">
           IVs</label>
-        <input type="number" id="iv-field{{i}}" name="Pokemon{{i}}HPIV" placeholder="HP" min="0" max="31" style="width:45px; height:20px;" />
+        <input type="number" id="iv-field{{i}}" name="Pokemon{{i}}HPIV" placeholder="HP" min="0" max="31"
+          style="width:45px; height:20px;" />
         <input type="number" id="iv-field" name="Pokemon{{i}}AtkIV" placeholder="Atk" min="0" max="31" />
         <input type="number" id="iv-field" name="Pokemon{{i}}DefIV" placeholder="Def" min="0" max="31" />
         <input type="number" id="iv-field" name="Pokemon{{i}}SpAtkIV" placeholder="S.Atk" min="0" max="31" />
@@ -1104,15 +1126,16 @@
   </div>
   <div class="break"></div>
   <div class="submitbuttons">
-    <button class="btn" name="type" value="raw" >Download</button>
+    <button class="btn" name="type" value="raw">Download</button>
     <div class="dropdown2">
-      <button class="btn"  name="type" style="border-left:1px solid rgb(3, 135, 91); border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
+      <button class="btn" name="type"
+        style="border-left:1px solid rgb(3, 135, 91); border-radius: 0 4px 4px 0; width: 20px; border-left-style: none;">
         <i class="fa fa-caret-down"></i>
       </button>
       <div class="dropdown-download">
-        <button class="bt" name="type" value="raw" >.raw File</button>
-        <button class="bt" name="type" value="bmp" >.bmp Image</button>
-        <button class="bt" name="type" value="all" >Download All</button>
+        <button class="bt" name="type" value="raw">.raw File</button>
+        <button class="bt" name="type" value="bmp">.bmp Image</button>
+        <button class="bt" name="type" value="all">Download All</button>
       </div>
     </div>
   </div>
